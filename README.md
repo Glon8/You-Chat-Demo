@@ -2,13 +2,23 @@
 
 This project is a **demo and prototype** for a future messaging product based on a new approach to communication.
 
-The current version focuses on testing the underlying infrastructure and validating the concept before development of the full product begins.
+## Core Concept
 
-## Current Technology
+The main goal of this prototype is to experiment with a messaging infrastructure built around **open and custom relays** that follow a shared set of rules.
 
-The current prototype may use:
+The concept gives users more control over both the **frontend and backend**, allowing them to create, configure, and operate their own relay infrastructure.
+
+The long-term goal is to minimize or completely remove the need for relay servers whenever possible by prioritizing **direct peer-to-peer communication**, with **IPv6 connections** as the preferred connection method.
+
+The ideal architecture would allow users to communicate directly without relying on a centralized middleman.
+
+## Current Prototype
+
+The current version is focused on testing the infrastructure and validating whether the proposed communication model is technically practical.
 
 ### Backend
+
+The backend may use:
 
 * Node.js
 * Express
@@ -17,26 +27,32 @@ The current prototype may use:
 
 ### Client
 
-* Python
-* Socket-based communication
+The current client is written in Python and uses socket-based communication.
 
-The Python client is designed to run in multiple environments, including:
+The Python client can potentially run in multiple environments:
 
 * Console
 * Termux on Android devices
 * Windows Shell
 * Linux terminals
 
-## Purpose
+## Testing Goals
 
-The current demo is primarily intended to:
+The current demo is intended to test:
 
-* Test the communication infrastructure
-* Experiment with the proposed messaging architecture
-* Validate the technical concept
-* Identify potential problems before developing the full product
+* Direct peer-to-peer communication
+* IPv6 connectivity
+* Open and custom relay infrastructure
+* Shared relay rules
+* User-controlled relay configuration
+* Communication between custom relay implementations
+* The overall feasibility of the proposed messaging architecture
 
-The prototype is expected to evolve significantly as the underlying concept and infrastructure are further developed.
+## Future Product
+
+This prototype is not intended to represent the final product. Its purpose is to experiment with the infrastructure and concept before developing the full application.
+
+The architecture may change significantly as testing reveals technical limitations, security concerns, or better approaches to achieving direct communication.
 
 ## Project Status
 
