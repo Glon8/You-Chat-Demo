@@ -1,4 +1,4 @@
-const relays = [];
+const relays = {};
 
 export const get_relays = () => relays
 
