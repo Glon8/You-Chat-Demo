@@ -1,11 +1,11 @@
 import express from 'express'
 
+import { wss_init } from './websockets-server';
 import cnn_router from './src/routes/connection.routes'
 import msg_router from './src/routes/messaging.routes';
 
 const app = express();
 const port = process.env.PORT || 5000;
-
 
 app.use(cors({
     origin: [
@@ -18,7 +18,9 @@ app.use(express.json());
 app.use('/api/cnn', cnn_router); // < connection
 app.use('/api/msg', msg_router); // < messaging
 
-app.listen(port, () => {
-    if(port == 5000) console.log(`Server started at http://localhost:${port}`);
+const server = app.listen(port, () => {
+    if (port == 5000) console.log(`Server started at http://localhost:${port}`);
     else console.log(`Server started at port: ${port}`);
-})
+});
+
+wss_init(server);
