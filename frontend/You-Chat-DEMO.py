@@ -25,7 +25,8 @@ def control_pannel():
 
         if data:
             data = json.loads(data)
-            print(f"\r\n[{data.snd_id}]> {data.trn_dt}\r\n")
+            print(f"\r\n[{data['snd_id']}]> {data['trn_dt']}\r\n")
+            data = None
 
         npt = input("> ")
 
