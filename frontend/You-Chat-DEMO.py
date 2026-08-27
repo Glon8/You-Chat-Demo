@@ -15,6 +15,7 @@ def control_pannel():
 
     gnr = op["gnr"]
     data = None
+    err_msg = ""
 
     while True:
         render()
@@ -24,6 +25,9 @@ def control_pannel():
         else:
             print("[Current WebSocket not accessible]")
 
+        if err_msg:
+            print(err_msg)
+
         if data:
             print(f"\r\n[{data.snd_id}]> {data.trn_dt}\r\n")
 
@@ -32,7 +36,8 @@ def control_pannel():
         if npt == "upd_lnk":
             gnr["ws_lnk"] = "ws://" + input("new link > ")
             try:
-                ws = websocket.create_connection(gnr["lnk"])
+                ws = websocket.create_connection(gnr["ws_lnk"])
+                err_msg = gnr["ws_lnk"]
                 ld = False
             except:
                 ld = True
