@@ -37,7 +37,6 @@ def control_pannel():
             gnr["ws_lnk"] = "ws://" + input("new link > ")
             try:
                 ws = websocket.create_connection(gnr["ws_lnk"])
-                err_msg = gnr["ws_lnk"]
                 ld = False
             except:
                 ld = True
