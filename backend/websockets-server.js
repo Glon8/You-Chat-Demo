@@ -11,10 +11,10 @@ export const wss_init = (server) => {
 
             // < verify data fields, eg strict verification
 
-            const req_types = ['cnn', 'dsc', 'msg'];
+            const req_types = ['cnn', 'dsc', 'msg', 'upd'];
+            // check if request is valid
+            if (!req_types.includes(req_type)) return;
             const snd = get_user(snd_id);
-            // check if request is valid and sender in on heartbeat
-            if (!req_types.includes(req_type) || false) return;
             // known/unknown user sends connection request
             if (req_type == 'cnn') {
                 // check heart beat of registered user and the socket
@@ -50,17 +50,5 @@ export const wss_init = (server) => {
                 trn_dt
             }));
         });
-
-        socket.on('error', () => { });
-
-        socket.on('close', () => {
-            /*
-                ** HANDLES ALL POSSIBLE DISCONNECTIONS!
-    
-                if socket closure triggered specifically by user, remove user from the users list!
-            */
-        });
     });
-
-    wss.on('close', (sck) => { /* socket server is shut down */ });
 }
