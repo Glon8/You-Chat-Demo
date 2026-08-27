@@ -22,6 +22,7 @@ The backend may use:
 
 * Node.js
 * Express
+* WebSockets
 * CORS
 * JavaScript
 
