@@ -18,8 +18,10 @@ export const wss_init = (server) => {
             // known/unknown user sends connection request
             if (req_type == 'cnn') {
                 // check heart beat of registered user and the socket
-                // Note: if user on heartbeat and sockets doesn match, send confirmation/warning to the sender on heartbeat!
-                if (snd.sck == socket && false) { }
+                // Note: if user on heartbeat and sockets doesn match, send confirmation/warning to the user on heartbeat!
+                if (snd.sck != socket /*&& false*/) {
+                    console.log('[Warning! User has no heartbeat or sockets doesnt match]');
+                }
                 add_user({ snd_id, socket });
                 return;
             }
@@ -40,10 +42,14 @@ export const wss_init = (server) => {
             // checking if reciever exists
             if (!rcv) {
                 // < transfer to another relay
+                console.log('[Data transferred to another relay]')
                 return;
             }
             // checking if reciever on heartbeat
-            if (!true) return;
+            if (!true) {
+                console.log('[Receiver has no heartbeat]');
+                return;
+            }
             // transfer data routed to reciever
             rcv.sck.send(JSON.stringify({
                 snd_id,
