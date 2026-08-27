@@ -20,15 +20,11 @@ def control_pannel():
     while True:
         render()
 
-        if not ld:
-            data = ws.recv()
-        else:
-            print("[Current WebSocket not accessible]")
-
         if err_msg:
             print(err_msg)
 
         if data:
+            data = json.loads(data)
             print(f"\r\n[{data.snd_id}]> {data.trn_dt}\r\n")
 
         npt = input("> ")
@@ -38,6 +34,14 @@ def control_pannel():
             try:
                 ws = websocket.create_connection(gnr["ws_lnk"])
                 ld = False
+                ws.send(
+                    json.dumps(
+                        {
+                            "snd_id": gnr["snd_id"],
+                            "req_type": "cnn",
+                        }
+                    )
+                )
             except:
                 ld = True
         if npt == "upd_rcv":
@@ -56,6 +60,10 @@ def control_pannel():
                         }
                     )
                 )
+
+                data = ws.recv()
+            else:
+                print("[Current WebSocket not accessible]")
         if npt == "dsc":
             gnr["ws_lnk"] = "ws://"
 
