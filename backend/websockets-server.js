@@ -23,10 +23,10 @@ export const wss_init = (server) => {
                 console.log('[Request for registration]');
                 // check heart beat of registered user and the socket
                 // Note: if user on heartbeat and sockets doesn match, send confirmation/warning to the user on heartbeat!
-                if (snd.sck != socket /*&& false*/) {
+                if (snd && snd.sck != socket /*&& false*/) {
                     console.log('[Warning! User has no heartbeat or sockets doesnt match]');
                 }
-                add_user({ snd_id, socket });
+                add_user({ snd_id, sck: socket });
                 return;
             }
 
@@ -66,5 +66,9 @@ export const wss_init = (server) => {
                 trn_dt
             }));
         });
+    });
+
+    wss.on('error', () => {
+        console.log('some error occured')
     });
 }
