@@ -12,29 +12,52 @@ _OPERATIONS = {
     ],
 }
 
+_MESSAGES = {}
+
 _SEPERATOR = "========================<"
 _LINK_DOWN = False
 _WEBSOCKET = None
 _REPLY = None
+_ERROR_MESSAGE = ''
 
 op = _OPERATIONS
 spr = _SEPERATOR
 ld = _LINK_DOWN
-ws = _WEBSOCKET
-rpl = _REPLY
+msg = _MESSAGES
+
+def get_WS():
+    return _WEBSOCKET
 
 def set_WS(new):
     global _WEBSOCKET
     _WEBSOCKET = new
 
-def set_LB(new):
+
+def set_LD(new):
     global _LINK_DOWN
     if not isinstance(new, bool):
         return
     _LINK_DOWN = new
 
+def get_RPL():
+    return _REPLY
 def set_RPL(new):
     global _REPLY
+
+    _REPLY = new
+
+
+def set_ERR(new):
+    global _ERROR_MESSAGE
     if not isinstance(new, str):
         return
-    _REPLY = new
+    _ERROR_MESSAGE = new
+
+
+def get_ERR():
+    return _ERROR_MESSAGE
+
+
+def msg_instance(name):
+    if not msg.get(str(name)):
+        msg[str(name)] = []

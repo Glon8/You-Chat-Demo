@@ -1,7 +1,6 @@
 import os
-import json
 
-from .values import op, spr, rpl, set_RPL
+from .values import op, spr, get_RPL, set_RPL, get_ERR
 
 
 def render():
@@ -19,8 +18,20 @@ def render():
             for val in item:
                 print(val)
 
+    rnd_err()
+
+    render_msg()
+
+
 def render_msg():
+    rpl = get_RPL()
     if rpl:
-        set_RPL(json.loads(rpl))
         print(f"\r\n[{rpl['snd_id']}]> {rpl['trn_dt']}\r\n")
         set_RPL(None)
+
+
+def rnd_err():
+    err_msg = get_ERR()
+
+    if err_msg:
+        print(err_msg)

@@ -1,24 +1,17 @@
-import websocket
-import json
-import random
+from data.values import op
+from data.visuals import render
+from data.link_update import lnk_upd
+from data.send import snd
+from data.connect import cnn
+from data.disconnect import dsc
+from data.helpers import config_load, message_load, file_update, getDir
 
-from data.values import op, set_LD, ld, ws, set_WS
-from data.visuals import render, render_msg
-from data.handlers.link_update import lnk_upd
-from data.handlers.send import snd
 
-
-def control_pannel():
+def control_panel():
     gnr = op["gnr"]
-    err_msg = ""
 
     while True:
         render()
-
-        if err_msg:
-            print(err_msg)
-
-        render_msg()
 
         npt = input("> ")
 
@@ -26,46 +19,21 @@ def control_pannel():
             lnk_upd()
         if npt == "upd_rcv":
             gnr["rcv_id"] = input("new receiver > ")
+            file_update(getDir(), 'config.json', gnr)
         if npt == "snd":
             snd()
         if npt == "dsc":
-            gnr["ws_lnk"] = "ws://"
-
-            if not ld():
-                ws().send(
-                    json.dumps(
-                        {
-                            "snd_id": gnr["snd_id"],
-                            "req_type": "dsc",
-                        }
-                    )
-                )
+            dsc()
 
 
 def main():
-    gnr = op["gnr"]
+    config_load()
 
-    gnr["snd_id"] = random.randint(1000, 9999)
+    message_load()
 
-    try:
-        ws = websocket.create_connection("ws://localhost:5173")
+    cnn()
 
-        set_WS(ws)
-
-        set_LD(False)
-
-        ws.send(
-            json.dumps(
-                {
-                    "snd_id": gnr["snd_id"],
-                    "req_type": "cnn",
-                }
-            )
-        )
-    except Exception:
-        set_LD(True)
-
-    control_pannel()
+    control_panel()
 
 
 if __name__ == "__main__":
