@@ -2,19 +2,14 @@ import websocket
 import json
 import random
 
-from data.values import op
-from data.visuals import render
-
-ws = None
-ld = False
+from data.values import op, set_LD, ld, ws, set_WS
+from data.visuals import render, render_msg
+from data.handlers.link_update import lnk_upd
+from data.handlers.send import snd
 
 
 def control_pannel():
-    global ws
-    global ld
-
     gnr = op["gnr"]
-    data = None
     err_msg = ""
 
     while True:
@@ -23,53 +18,21 @@ def control_pannel():
         if err_msg:
             print(err_msg)
 
-        if data:
-            data = json.loads(data)
-            print(f"\r\n[{data['snd_id']}]> {data['trn_dt']}\r\n")
-            data = None
+        render_msg()
 
         npt = input("> ")
 
         if npt == "upd_lnk":
-            gnr["ws_lnk"] = "ws://" + input("new link > ")
-            try:
-                ws = websocket.create_connection(gnr["ws_lnk"])
-                ld = False
-                ws.send(
-                    json.dumps(
-                        {
-                            "snd_id": gnr["snd_id"],
-                            "req_type": "cnn",
-                        }
-                    )
-                )
-            except:
-                ld = True
+            lnk_upd()
         if npt == "upd_rcv":
             gnr["rcv_id"] = input("new receiver > ")
         if npt == "snd":
-            if not ld:
-                msg = input("message > ")
-
-                ws.send(
-                    json.dumps(
-                        {
-                            "snd_id": gnr["snd_id"],
-                            "rcv_id": gnr["rcv_id"],
-                            "req_type": "msg",
-                            "trn_dt": msg,
-                        }
-                    )
-                )
-
-                data = ws.recv()
-            else:
-                print("[Current WebSocket not accessible]")
+            snd()
         if npt == "dsc":
             gnr["ws_lnk"] = "ws://"
 
-            if not ld:
-                ws.send(
+            if not ld():
+                ws().send(
                     json.dumps(
                         {
                             "snd_id": gnr["snd_id"],
@@ -80,16 +43,17 @@ def control_pannel():
 
 
 def main():
-    global ws
-    global ld
-
     gnr = op["gnr"]
 
     gnr["snd_id"] = random.randint(1000, 9999)
 
     try:
         ws = websocket.create_connection("ws://localhost:5173")
-        ld = False
+
+        set_WS(ws)
+
+        set_LD(False)
+
         ws.send(
             json.dumps(
                 {
@@ -98,8 +62,8 @@ def main():
                 }
             )
         )
-    except:
-        ld = True
+    except Exception:
+        set_LD(True)
 
     control_pannel()
 
