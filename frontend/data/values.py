@@ -9,10 +9,16 @@ _OPERATIONS = {
         "* upd_rcv - update the receiver",
         "* snd     - send a message",
         "* dsc     - disconnect from relay",
+        "* vcnt     - view contacts",
+        "* acnt     - add contact",
+        "* rcnt     - remove contact",
+        "* vmsg     - view messages",
     ],
 }
 
 _MESSAGES = {}
+
+_CONTACTS = {}
 
 _SEPERATOR = "========================<"
 _LINK_DOWN = False
@@ -24,9 +30,12 @@ op = _OPERATIONS
 spr = _SEPERATOR
 ld = _LINK_DOWN
 msg = _MESSAGES
+cnt = _CONTACTS
+
 
 def get_WS():
     return _WEBSOCKET
+
 
 def set_WS(new):
     global _WEBSOCKET
@@ -39,8 +48,11 @@ def set_LD(new):
         return
     _LINK_DOWN = new
 
+
 def get_RPL():
     return _REPLY
+
+
 def set_RPL(new):
     global _REPLY
 

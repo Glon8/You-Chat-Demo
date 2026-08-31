@@ -1,7 +1,8 @@
 import websocket
 import json
 
-from .values import op, set_WS,set_LD, set_ERR, get_ERR
+from .values import op, set_WS, set_LD, set_ERR, get_ERR
+
 
 def cnn():
     gnr = op['gnr']

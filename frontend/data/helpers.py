@@ -6,7 +6,7 @@ import random
 from datetime import datetime
 from pathlib import Path
 
-from .values import op, msg
+from .values import op, msg, cnt
 
 
 def getDir():
@@ -75,12 +75,31 @@ def message_load():
         write_file(getDir(), 'chats.json', data)
 
 
+def contacts_load():
+    data = read_file('contacts.json')
+
+    if data:
+        data = json.loads(data)
+
+        # strict verification needed
+        if not data:
+            return
+
+        for key, val in data.items():
+            cnt[key] = val
+    else:
+        data = {}
+
+        write_file(getDir(), 'chats.json', data)
+
+
 def file_update(file_path, file_name, data):
     saved_data = json.loads(read_file(file_name))
 
     saved_data.update(data)
 
     write_file(file_path, file_name, saved_data)
+
 
 def append_message(rcv_id, sender, message):
     now = datetime.now().strftime("%H:%M:%S")
