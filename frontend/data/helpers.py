@@ -33,7 +33,7 @@ def write_file(file_path, file_name, data):
 
 def config_load():
     gnr = op['gnr']
-    data = read_file('config.json')
+    data = read_file(f'{getDir()}/config.json')
 
     if data:
         data = json.loads(data)
@@ -58,7 +58,7 @@ def config_load():
 
 
 def message_load():
-    data = read_file('chats.json')
+    data = read_file(f'{getDir()}/chats.json')
 
     if data:
         data = json.loads(data)
@@ -76,7 +76,7 @@ def message_load():
 
 
 def contacts_load():
-    data = read_file('contacts.json')
+    data = read_file(f'{getDir()}/contacts.json')
 
     if data:
         data = json.loads(data)
@@ -90,11 +90,16 @@ def contacts_load():
     else:
         data = {}
 
-        write_file(getDir(), 'chats.json', data)
+        write_file(getDir(), 'contacts.json', data)
 
 
 def file_update(file_path, file_name, data):
-    saved_data = json.loads(read_file(file_name))
+    saved_data = read_file(file_name)
+
+    if saved_data:
+        saved_data = json.loads(saved_data)
+    else:
+        saved_data = {}
 
     saved_data.update(data)
 

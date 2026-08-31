@@ -1,4 +1,4 @@
-from .values import cnt, msg, set_ERR
+from .values import cnt, msg, set_ERR, op
 from .helpers import write_file, getDir
 
 
@@ -21,6 +21,8 @@ def rcnt():
     if msg.get(cnt_id):
         msg.pop(cnt_id)
         write_file(getDir(), 'contacts.json', msg)
+
+    op['gnr']['rcv_id'] = ''
 
     set_ERR("[Contact has been successfully removed]")
     input('Press ENTER to continue...')

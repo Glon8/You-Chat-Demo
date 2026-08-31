@@ -9,3 +9,5 @@ def vcnt():
             print(f'[{val}] {key}')
     else:
         print(f'[No contacts]')
+
+    input('Press ENTER to continue...')

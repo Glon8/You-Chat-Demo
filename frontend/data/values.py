@@ -9,10 +9,10 @@ _OPERATIONS = {
         "* upd_rcv - update the receiver",
         "* snd     - send a message",
         "* dsc     - disconnect from relay",
-        "* vcnt     - view contacts",
-        "* acnt     - add contact",
-        "* rcnt     - remove contact",
-        "* vmsg     - view messages",
+        "* vcnt    - view contacts",
+        "* acnt    - add contact",
+        "* rcnt    - remove contact",
+        "* vmsg    - view messages",
     ],
 }
 
