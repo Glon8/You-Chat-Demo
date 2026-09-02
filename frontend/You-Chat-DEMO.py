@@ -9,6 +9,7 @@ from data.add_contact import acnt
 from data.view_contacts import vcnt
 from data.view_messages import vmsg
 from data.remove_contact import rcnt
+from data.messages_manager import manage
 
 
 def control_panel():
@@ -43,6 +44,8 @@ def main():
     message_load()
 
     cnn()
+
+    manage()
 
     control_panel()
 
