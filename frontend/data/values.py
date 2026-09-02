@@ -20,14 +20,18 @@ _MESSAGES = {}
 
 _CONTACTS = {}
 
+_PENDING = []
+
 _SEPERATOR = "========================<"
+
 _LINK_DOWN = False
 _WEBSOCKET = None
-_REPLY = None
+
 _ERROR_MESSAGE = ''
 
 op = _OPERATIONS
 spr = _SEPERATOR
+pnd = _PENDING
 ld = _LINK_DOWN
 msg = _MESSAGES
 cnt = _CONTACTS
@@ -49,16 +53,6 @@ def set_LD(new):
     _LINK_DOWN = new
 
 
-def get_RPL():
-    return _REPLY
-
-
-def set_RPL(new):
-    global _REPLY
-
-    _REPLY = new
-
-
 def set_ERR(new):
     global _ERROR_MESSAGE
     if not isinstance(new, str):
@@ -70,6 +64,8 @@ def get_ERR():
     return _ERROR_MESSAGE
 
 
-def msg_instance(name):
-    if not msg.get(str(name)):
-        msg[str(name)] = []
+def msg_instance(snd_id):
+    snd = str(snd_id)
+
+    if not msg.get(snd):
+        msg[snd] = []

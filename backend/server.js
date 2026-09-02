@@ -14,9 +14,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-const server = app.listen(port, () => {
-    if (port == 5000) console.log(`Server started at http://localhost:${port}`);
-    else console.log(`Server started at port: ${port}`);
-});
+const server = app.listen(port, '0.0.0.0', () => { console.log(`Server started at port: ${port}`) });
 
 wss_init(server);

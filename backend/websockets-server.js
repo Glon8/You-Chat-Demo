@@ -10,7 +10,7 @@ export const wss_init = (server) => {
     wss.on('connection', (socket) => {
         console.log('[Connection detected]');
         socket.on('message', (data) => {
-            const { snd_id, rcv_id, req_type, trn_dt } = JSON.parse(data.toString());
+            const { snd_id, rcv_id, req_type, trn_dt, tm_stm } = JSON.parse(data.toString());
 
             // < verify data fields, eg strict verification
 
@@ -61,10 +61,7 @@ export const wss_init = (server) => {
                 return;
             }
             // transfer data routed to reciever
-            rcv.sck.send(JSON.stringify({
-                snd_id,
-                trn_dt
-            }));
+            rcv.sck.send(JSON.stringify({ snd_id, rcv_id, req_type, trn_dt, tm_stm }));
         });
     });
 

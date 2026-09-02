@@ -2,6 +2,7 @@ import json
 
 from .values import op, ld, set_ERR, get_WS, get_ERR
 from .helpers import file_update, getDir
+from .link_listener import dont_listen
 
 
 def dsc():
@@ -20,6 +21,8 @@ def dsc():
                 }
             )
         )
+
+        dont_listen()
 
         set_ERR('')
     elif not get_ERR():

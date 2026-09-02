@@ -1,21 +1,26 @@
-from .values import msg, cnt, spr, op, set_ERR
+import threading
+import time
 
+from datetime import datetime
+
+from .values import msg, cnt, spr, op
+from .helpers import err_pop
+
+_KILL = False
 
 def vmsg():
     print(f'{spr} MESSAGES')
 
     if not msg:
-        print(f'[No messages]')
+        err_pop('No messages')
         return
-
-    user = op['gnr']['snd_id']
 
     contact = input('contact id or name > ')
 
     if contact not in cnt and contact not in cnt.values():
-        set_ERR("[Provided user not in contacts]")
-        input('Press ENTER to continue...')
-        return
+        err_pop("Provided id/name not in contacts")
+        cnt_id = contact
+        cnt_name = 'Not in contacts'
     else:
         if contact in cnt:
             cnt_id = contact
@@ -27,21 +32,63 @@ def vmsg():
     chat = msg.get(cnt_id)
 
     if not chat:
-        set_ERR("[There no chat with this contact]")
-        input('Press ENTER to continue...')
+        err_pop("There no chat with this contact")
         return
 
-    for message in chat:
-        if message['snd'] == cnt_id:
-            name = cnt_name
-        elif message['snd'] == user:
-            name = 'Me'
-        else:
-            name = cnt_id
+    visualize(cnt_id, cnt_name)
 
-        print(
-            f"[{name}][{message['timestamp']}]:"
-            f"{message['msg']}"
-        )
+    input('===============================================<\r\n'
+          ' Press ENTER to stop observe incoming messages |\r\n'
+          '===============================================<\r\n')
 
-    input('Press ENTER to continue...')
+    dont_visualize()
+
+def msg_lst(cnt_id, cnt_name):
+    global _KILL
+
+    msg_cnt = 0
+
+    time.sleep(0.1)
+
+    while True:
+        if _KILL:
+            _KILL = False
+            break
+
+        chat = msg.get(cnt_id)
+
+        if msg_cnt <= (len(chat) - 1):
+            user = op['gnr']['snd_id']
+
+            message = chat[msg_cnt]
+            sender = message['snd_id']
+
+            if sender == cnt_id:
+                name = cnt_name
+            elif sender == user:
+                name = 'Me'
+            else:
+                name = cnt_id
+
+            t = message['tm_stm']
+            dt = datetime.fromtimestamp(t)
+
+            print(
+                f"[{name}]"
+                f"[{dt.hour:02d}:{dt.minute:02d}:{dt.second:02d}]:"
+                f"{message['msg']}\r\n"
+            )
+
+            msg_cnt += 1
+
+def visualize(cnt_id, cnt_name):
+    threading.Thread(
+        target=msg_lst,
+        args=(cnt_id, cnt_name,),
+        daemon=True
+    ).start()
+
+def dont_visualize():
+    global _KILL
+
+    _KILL = True

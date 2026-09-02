@@ -1,6 +1,6 @@
 import os
 
-from .values import op, spr, get_RPL, set_RPL, get_ERR
+from .values import op, cnt, spr, get_ERR
 
 
 def render():
@@ -11,7 +11,14 @@ def render():
             print(f'{spr} GENERAL')
 
             for name, value in item.items():
-                print(f'[{name}] {value}')
+                if name == 'rcv_id':
+                    rcv_name = cnt.get(value)
+                    if rcv_name:
+                        print(f'[rcv_id] {rcv_name} > {value}')
+                    else:
+                        print(f'[{name}] {value}')
+                else:
+                    print(f'[{name}] {value}')
         if key == 'slc_op':
             print(f'{spr} OPERATIONS')
 
@@ -19,15 +26,6 @@ def render():
                 print(val)
 
     rnd_err()
-
-    render_msg()
-
-
-def render_msg():
-    rpl = get_RPL()
-    if rpl:
-        print(f"\r\n[{rpl['snd_id']}]> {rpl['trn_dt']}\r\n")
-        set_RPL(None)
 
 
 def rnd_err():

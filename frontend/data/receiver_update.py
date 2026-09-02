@@ -1,5 +1,5 @@
-from .values import op, cnt, set_ERR
-from .helpers import file_update, getDir
+from .values import op, cnt
+from .helpers import file_update, getDir, err_pop
 
 
 def upd_rcv():
@@ -8,8 +8,11 @@ def upd_rcv():
     rcv = input("new receiver > ")
 
     if rcv not in cnt and rcv not in cnt.values():
-        set_ERR("[Provided user not in contacts]")
+        err_pop("This number not a contact")
         return
+
+    if rcv in cnt.values():
+        rcv = next(key for key, value in cnt.items() if value == rcv)
 
     gnr["rcv_id"] = rcv
 

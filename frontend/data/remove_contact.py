@@ -1,13 +1,12 @@
-from .values import cnt, msg, set_ERR, op
-from .helpers import write_file, getDir
+from .values import cnt, msg, op
+from .helpers import write_file, getDir, err_pop
 
 
 def rcnt():
     contact = input('contact name or id > ')
 
     if contact not in cnt and contact not in cnt.values():
-        set_ERR("[Provided user not in contacts]")
-        input('Press ENTER to continue...')
+        err_pop("Provided user not in contacts")
         return
     else:
         if contact in cnt:
@@ -16,13 +15,10 @@ def rcnt():
             cnt_id = next(key for key, value in cnt.items() if value == contact)
 
     cnt.pop(cnt_id)
-    write_file(getDir(), 'chats.json', cnt)
+    write_file(getDir(), 'contacts.json', cnt)
 
     if msg.get(cnt_id):
         msg.pop(cnt_id)
-        write_file(getDir(), 'contacts.json', msg)
+        write_file(getDir(), 'chats.json', msg)
 
-    op['gnr']['rcv_id'] = ''
-
-    set_ERR("[Contact has been successfully removed]")
-    input('Press ENTER to continue...')
+    err_pop("Contact has been successfully removed")

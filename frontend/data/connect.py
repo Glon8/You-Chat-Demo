@@ -2,6 +2,7 @@ import websocket
 import json
 
 from .values import op, set_WS, set_LD, set_ERR, get_ERR
+from .link_listener import listen
 
 
 def cnn():
@@ -26,6 +27,8 @@ def cnn():
                 }
             )
         )
+
+        listen()
 
         set_LD(False)
         set_ERR('')

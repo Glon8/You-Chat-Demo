@@ -3,10 +3,9 @@ import os
 import sys
 import random
 
-from datetime import datetime
 from pathlib import Path
 
-from .values import op, msg, cnt
+from .values import op, msg, cnt, pnd
 
 
 def getDir():
@@ -106,7 +105,10 @@ def file_update(file_path, file_name, data):
     write_file(file_path, file_name, saved_data)
 
 
-def append_message(rcv_id, sender, message):
-    now = datetime.now().strftime("%H:%M:%S")
+def add_pending(snd_id, rcv_id, timestamp, message):
+    pnd.append({'snd_id': snd_id, 'rcv_id': rcv_id, 'tm_stm': timestamp, 'msg': message})
 
-    msg[rcv_id].append({'msg': message, 'snd': sender, 'timestamp': now})
+
+def err_pop(message):
+    print(f'[{message}]')
+    input('Press ENTER to continue...')
