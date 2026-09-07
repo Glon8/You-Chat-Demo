@@ -1,6 +1,6 @@
-import { get_user } from "../data/users.data.js";
+import { get_user, upd_xphrt } from "../data/users.data.js";
 
-export const message = (data, req_type) => {
+export const message = async (data, req_type) => {
     if (req_type != 'msg') return false;
 
     const { snd_id, rcv_id, trn_dt, tm_stm } = JSON.parse(data.toString());
@@ -12,13 +12,17 @@ export const message = (data, req_type) => {
     if (!rcv) {
         console.log(`[${rcv_id}]>[Warning! Receiver not registred]`);
         // < transfer to another relay
-        console.log('[Data transferred to another relay]')
+        console.log('[Data has been transferred to another relay]')
         return true;
     }
-    // checking if reciever on heartbeat
-    if (!true) {
-        console.log(`[${rcv_id}]>[Receiver has no heartbeat]`);
-        return true;
+
+    let ping_state = true;
+    // checking if reciever has positive heartbeat
+    if (rcv && Date.now() > rcv.xphrt) {
+        ping_state = await ping_check(rcv.sck, 5);
+
+        if (ping_state) upd_xphrt(rcv_id);
+        else { console.log(`[${rcv_id}]>[Receiver has no heartbeat]`); return true; }
     }
     // transfer data routed to reciever
     rcv.sck.send(JSON.stringify({ snd_id, rcv_id, req_type, trn_dt, tm_stm }));
