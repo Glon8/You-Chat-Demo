@@ -1,3 +1,5 @@
+import { get_user } from "../data/users.data.js";
+
 export const message = (data, req_type) => {
     if (req_type != 'msg') return false;
 

@@ -1,4 +1,4 @@
-import { add_user } from "../data/users.data";
+import { add_user, get_user } from "../data/users.data.js";
 
 export const connect = (req_type, snd_id, socket) => {
     if (req_type != 'cnn') return false;
