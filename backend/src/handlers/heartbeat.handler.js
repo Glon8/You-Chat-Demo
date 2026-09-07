@@ -1,4 +1,4 @@
-export const ping_check = (socket, timeout, user_id) => {
+export const ping_check = (socket, timeout) => {
     return new Promise((resolve) => {
         const pong_state = () => {
             clearTimeout(timer);
