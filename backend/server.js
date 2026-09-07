@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 
 import { wss_init } from './websockets-server.js';
+import utilRouter from './src/routers/util.router.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -13,6 +14,8 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
+
+app.use('/api/ping', utilRouter);
 
 const server = app.listen(port, '0.0.0.0', () => { console.log(`Server started at port: ${port}`) });
 
