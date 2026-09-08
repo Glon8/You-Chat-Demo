@@ -1,6 +1,7 @@
 import { get_user, upd_xphrt } from "../data/users.data.js";
+import { ping_check } from "./heartbeat.handler.js";
 
-export const message = async (data, req_type) => {
+export const message = async (req_type, data) => {
     if (req_type != 'msg') return false;
 
     const { snd_id, rcv_id, trn_dt, tm_stm } = JSON.parse(data.toString());
