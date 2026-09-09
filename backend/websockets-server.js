@@ -35,13 +35,9 @@ export const wss_init = (server) => {
 
             if (await transfer(req_type, data)) return;
         });
-
-        socket.on('pong', (item) => {
-            console.log(`[GLOBAL PONG] ${item}`);
-        });
     });
 
     wss.on('error', () => {
-        console.log('some error occured')
+        console.log('some error occured');
     });
 }
