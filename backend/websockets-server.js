@@ -3,7 +3,7 @@ import { WebSocketServer } from "ws";
 import { get_user } from "./src/data/users.data.js";
 import { connect } from "./src/handlers/connection.handler.js";
 import { disconnect } from "./src/handlers/disconnection.handler.js";
-import { message } from "./src/handlers/messaging.handler.js";
+import { transfer } from "./src/handlers/transition.handler.js";
 
 export let wss = null;
 
@@ -33,7 +33,7 @@ export const wss_init = (server) => {
             // known/unknown user sends disconnection request
             if (await disconnect(req_type, snd_id, socket)) return;
 
-            if (await message(req_type, data)) return;
+            if (await transfer(req_type, data)) return;
         });
 
         socket.on('pong', (item) => {
