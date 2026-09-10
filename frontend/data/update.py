@@ -5,7 +5,7 @@ from .values import cnt, msg, get_WS, op
 
 def update(cnt_id, timestamp):
     # check if cnt_id in cnt
-    if cnt_id and cnt_id not in cnt:
+    if cnt_id and cnt_id not in cnt or not get_WS():
         return
 
     chat = msg.get(cnt_id)

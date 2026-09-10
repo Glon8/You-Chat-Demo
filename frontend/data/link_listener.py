@@ -5,6 +5,7 @@ import time
 from .values import get_WS, cnt
 from .helpers import add_pending, err_pop
 from .update import update
+from .connect import cnn
 
 _KILL = False
 
@@ -47,6 +48,7 @@ def lnk_lst():
 
         except Exception:
             err_pop("Link listener has been crashed")
+            cnn()
             break
 
 
