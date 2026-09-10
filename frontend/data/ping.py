@@ -8,7 +8,7 @@ def relay_ping():
 
     http_address = ws_lnk.replace("ws://", "http://", 1)
 
-    print(f'[Ping sent] {http_address}')
+    print(f'\r\n[Ping sent] {http_address}')
     try:
         response = requests.get(http_address + '/api/ping', timeout=3)
 
