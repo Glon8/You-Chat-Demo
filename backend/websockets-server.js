@@ -15,12 +15,13 @@ export const wss_init = (server) => {
         socket.on('message', async (data) => {
             const { snd_id, req_type } = JSON.parse(data.toString());
 
+            console.log(`[${snd_id}]>[Request: ${req_type}]`);
+
             // < verify data fields, eg strict verification
 
             const req_types = ['cnn', 'dsc', 'msg', 'upd'];
             // check if request is valid
             if (!req_types.includes(req_type)) return;
-
             const snd = get_user(snd_id);
             // known/unknown user sends connection request
             if (await connect(req_type, snd_id, socket)) return;
