@@ -8,9 +8,16 @@ def relay_ping():
 
     http_address = ws_lnk.replace("ws://", "http://", 1)
 
+    print(f'[Ping sent] {http_address}')
     try:
-        response = requests.get(http_address + '/ping', timeout=3)
+        response = requests.get(http_address + '/api/ping', timeout=3)
 
-        return response == 200
+        res = response.status_code
+
+        print(f'[Response code] {res}')
+
+        return res == 200
     except requests.RequestException:
+        print(f'[Response code] {404}')
+
         return False

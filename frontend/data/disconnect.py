@@ -13,8 +13,10 @@ def dsc():
 
     file_update(getDir(), 'config.json', gnr)
 
-    if not ld:
-        get_WS().send(
+    ws = get_WS()
+
+    if not ld and ws:
+        ws.send(
             json.dumps(
                 {
                     "snd_id": gnr["snd_id"],

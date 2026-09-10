@@ -9,6 +9,7 @@ from .link_listener import listen
 from .update import update
 from .ping import relay_ping
 
+_KILL = False
 ping = True
 
 def cnn():
@@ -64,7 +65,7 @@ def wait_ping():
     # pinging until positive reply
     set_LD(True)
     if not get_ERR():
-        set_ERR("[Current WebSocket not accessible]")
+        set_ERR("[No ping for current WebSocket]")
 
     while not ping:
         if _KILL:

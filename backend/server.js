@@ -15,7 +15,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.use('/api/ping', utilRouter);
+app.use('/api', utilRouter);
 
 const server = app.listen(port, '0.0.0.0', () => { console.log(`Server started at port: ${port}`) });
 

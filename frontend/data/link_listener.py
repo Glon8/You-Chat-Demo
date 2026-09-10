@@ -18,6 +18,9 @@ def lnk_lst():
                 _KILL = False
                 break
 
+            if not get_WS():
+                return
+
             package = get_WS().recv()  # < receive package
 
             unload = json.loads(package)  # < parse JSON
