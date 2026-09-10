@@ -7,7 +7,8 @@ from .helpers import add_pending, err_pop
 
 def snd():
     gnr = op["gnr"]
-    if not ld and gnr['rcv_id'] in cnt:
+    
+    if not ld and gnr['rcv_id'] in cnt and get_WS():
         now_time = time.time()
         MSG = input("message > ")
 
