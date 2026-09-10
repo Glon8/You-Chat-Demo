@@ -7,12 +7,14 @@ def upd_rcv():
 
     rcv = input("new receiver > ")
 
-    if rcv not in cnt and rcv not in cnt.values():
+    rcv_in_cnt_name = any(data.get("name") == rcv for data in cnt.values())
+
+    if rcv not in cnt and not rcv_in_cnt_name:
         err_pop("This number not a contact")
         return
 
-    if rcv in cnt.values():
-        rcv = next(key for key, value in cnt.items() if value == rcv)
+    if rcv_in_cnt_name:
+        rcv = next(key for key, value in cnt.items() if value.get('name') == rcv)
 
     gnr["rcv_id"] = rcv
 

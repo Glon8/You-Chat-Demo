@@ -8,6 +8,7 @@ from .helpers import err_pop
 
 _KILL = False
 
+
 def vmsg():
     print(f'{spr} MESSAGES')
 
@@ -17,16 +18,16 @@ def vmsg():
 
     contact = input('contact id or name > ')
 
-    if contact not in cnt and contact not in cnt.values():
+    if contact not in cnt and not any(data.get("name") == contact for data in cnt.values()):
         err_pop("Provided id/name not in contacts")
         cnt_id = contact
         cnt_name = 'Not in contacts'
     else:
         if contact in cnt:
             cnt_id = contact
-            cnt_name = cnt[contact]
+            cnt_name = cnt[contact].get('name')
         else:
-            cnt_id = next(key for key, value in cnt.items() if value == contact)
+            cnt_id = next(key for key, value in cnt.items() if value.get('name') == contact)
             cnt_name = contact
 
     chat = msg.get(cnt_id)
@@ -42,6 +43,7 @@ def vmsg():
           '===============================================<\r\n')
 
     dont_visualize()
+
 
 def msg_lst(cnt_id, cnt_name):
     global _KILL
@@ -81,12 +83,14 @@ def msg_lst(cnt_id, cnt_name):
 
             msg_cnt += 1
 
+
 def visualize(cnt_id, cnt_name):
     threading.Thread(
         target=msg_lst,
         args=(cnt_id, cnt_name,),
         daemon=True
     ).start()
+
 
 def dont_visualize():
     global _KILL

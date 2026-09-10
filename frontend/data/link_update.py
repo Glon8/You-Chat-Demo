@@ -1,5 +1,5 @@
 from .values import op
-from .connect import cnn
+from .connect import cnn, stop_waiting
 from .helpers import file_update, getDir
 
 
@@ -9,5 +9,7 @@ def lnk_upd():
     gnr["ws_lnk"] = "ws://" + input("new link > ")
 
     file_update(getDir(), 'config.json', gnr)
+
+    stop_waiting()
 
     cnn()

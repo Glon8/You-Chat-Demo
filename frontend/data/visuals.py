@@ -12,7 +12,8 @@ def render():
 
             for name, value in item.items():
                 if name == 'rcv_id':
-                    rcv_name = cnt.get(value)
+                    cnt_info = cnt.get(value)
+                    rcv_name = cnt_info.get('name')
                     if rcv_name:
                         print(f'[rcv_id] {rcv_name} > {value}')
                     else:

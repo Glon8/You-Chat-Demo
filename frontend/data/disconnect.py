@@ -3,6 +3,7 @@ import json
 from .values import op, ld, set_ERR, get_WS, get_ERR
 from .helpers import file_update, getDir
 from .link_listener import dont_listen
+from .connect import stop_waiting
 
 
 def dsc():
@@ -26,4 +27,6 @@ def dsc():
 
         set_ERR('')
     elif not get_ERR():
+        stop_waiting()
+
         set_ERR("[Current WebSocket not accessible]")

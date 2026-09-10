@@ -6,7 +6,11 @@ def vcnt():
 
     if cnt:
         for key, val in cnt.items():
-            print(f'[{val}] {key}')
+            if val.get('name'):
+                print(f'[{val.get('name')}] {key}')
+            else:
+                print(f'[No name] {key}')
+            print(f'[Last seen] {val.get('last_seen')}')
     else:
         print(f'[No contacts]')
 

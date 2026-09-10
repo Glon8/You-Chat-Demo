@@ -5,6 +5,7 @@ const users = {};
         socket,              // < sck
         connceted_since,     // < cnn_snc
         expired_heartrate,   // < xphrt
+        last_seen,           // < ls
     }
 */
 export const get_user = (user_id) => users[user_id];

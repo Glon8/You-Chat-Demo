@@ -1,18 +1,18 @@
-from .values import cnt, msg, op
+from .values import cnt, msg
 from .helpers import write_file, getDir, err_pop
 
 
 def rcnt():
     contact = input('contact name or id > ')
 
-    if contact not in cnt and contact not in cnt.values():
+    if contact not in cnt and not any(data.get("name") == contact for data in cnt.values()):
         err_pop("Provided user not in contacts")
         return
     else:
         if contact in cnt:
             cnt_id = contact
         else:
-            cnt_id = next(key for key, value in cnt.items() if value == contact)
+            cnt_id = next(key for key, value in cnt.items() if value.get('name') == contact)
 
     cnt.pop(cnt_id)
     write_file(getDir(), 'contacts.json', cnt)

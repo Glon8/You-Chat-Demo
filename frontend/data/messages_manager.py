@@ -1,7 +1,7 @@
 import threading
 
 from .values import op, pnd, msg, msg_instance
-from .helpers import file_update, getDir, err_pop
+from .helpers import file_update, getDir
 
 _KILL = False
 
@@ -15,6 +15,7 @@ def msg_mng():
             break
 
         cluster = 100
+        rcv_lst = []
         # pending to active messages
         while cluster > 0 and pnd:
             package = pnd.pop(0)
@@ -34,8 +35,14 @@ def msg_mng():
                 msg_instance(chat_id)
 
             msg[chat_id].append(package)
+            rcv_lst.append(snd_id)
 
             cluster -= 1
+
+        for rcv in rcv_lst:
+            msg[rcv].sort(key=lambda x: x["tm_stm"])
+
+        rcv_lst.clear()
         # update local file
         if cluster < 100:
             file_update(getDir(), 'chats.json', msg)
