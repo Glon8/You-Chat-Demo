@@ -8,6 +8,8 @@ def update(cnt_id, timestamp):
     if cnt_id and cnt_id not in cnt or not get_WS():
         return
 
+    print(f'[Update requested]> {cnt_id}')
+
     chat = msg.get(cnt_id)
     package = []
 
