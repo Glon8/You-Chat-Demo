@@ -39,7 +39,7 @@ def lnk_lst():
                     update(ul.get("snd_id"), tm_stm)
 
                 for msg in dt.get('msg_snc'):
-                    add_pending(msg.get("snd_id"), msg.get("rcv_id"), msg.get('tm_stm'), msg.get('trn_dt'))
+                    add_pending(msg.get("snd_id"), msg.get("rcv_id"), msg.get('tm_stm'), msg.get('msg'))
 
             # check if a sender is in contacts > update its "last_seen" tag to now
             if snd in cnt:
