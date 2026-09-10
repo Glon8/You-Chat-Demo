@@ -35,7 +35,9 @@ def msg_mng():
                 msg_instance(chat_id)
 
             msg[chat_id].append(package)
-            rcv_lst.append(snd_id)
+            
+            if chat_id != ".trash":
+                rcv_lst.append(chat_id)
 
             cluster -= 1
 
