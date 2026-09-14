@@ -47,7 +47,7 @@ def msg_mng():
             cluster -= 1
 
         for rcv in rcv_lst:
-            msg[rcv].sort(key=lambda x: x["tm_stm"])
+            msg[rcv].sort(key=lambda x: x["rcv_tm_stm"])
 
         rcv_lst.clear()
         # update local file
