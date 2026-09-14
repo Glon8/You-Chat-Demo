@@ -1,6 +1,6 @@
 import json
 
-from .values import op, ld, set_ERR, get_WS, get_ERR
+from .values import op, set_ERR, get_WS, get_ERR
 from .helpers import file_update, getDir
 from .link_listener import dont_listen
 from .connect import stop_waiting
@@ -15,20 +15,23 @@ def dsc():
 
     ws = get_WS()
 
-    if not ld and ws:
-        ws.send(
-            json.dumps(
-                {
-                    "snd_id": gnr["snd_id"],
-                    "req_type": "dsc",
-                }
-            )
+    if not ws:
+        if not get_ERR():
+            stop_waiting()
+    
+            set_ERR("[Current WebSocket not accessible]")
+        return
+
+    ws.send(
+        json.dumps(
+            {
+                "snd_id": gnr["snd_id"],
+                "req_type": "dsc",
+            }
         )
+    )
 
-        dont_listen()
+    dont_listen()
 
-        set_ERR('')
-    elif not get_ERR():
-        stop_waiting()
-
-        set_ERR("[Current WebSocket not accessible]")
+    set_ERR('')
+    

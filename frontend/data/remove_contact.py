@@ -8,11 +8,11 @@ def rcnt():
     if contact not in cnt and not any(data.get("name") == contact for data in cnt.values()):
         err_pop("Provided user not in contacts")
         return
+    
+    if contact in cnt:
+        cnt_id = contact
     else:
-        if contact in cnt:
-            cnt_id = contact
-        else:
-            cnt_id = next(key for key, value in cnt.items() if value.get('name') == contact)
+        cnt_id = next(key for key, value in cnt.items() if value.get('name') == contact)
 
     cnt.pop(cnt_id)
     write_file(getDir(), 'contacts.json', cnt)
