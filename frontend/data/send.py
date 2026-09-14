@@ -7,11 +7,6 @@ from .helpers import add_pending, err_pop
 
 def snd():
     gnr = op["gnr"]
-    ws = get_WS()
-    
-    if ws:
-        err_pop("Current WebSocket not accessible")
-        return
     
     if not gnr["rcv_id"]:
         err_pop("No receiver has been selected")
@@ -23,17 +18,22 @@ def snd():
 
     now_time = time.time()
     MSG = input("message > ")
+    ws = get_WS()
 
-    ws.send(
-        json.dumps(
-            {
-                "snd_id": gnr["snd_id"],
-                "rcv_id": gnr["rcv_id"],
-                "req_type": "msg",
-                "trn_dt": MSG,
-                "tm_stm": now_time
-            }
+    if ws:
+        ws.send(
+            json.dumps(
+                {
+                    "snd_id": gnr["snd_id"],
+                    "rcv_id": gnr["rcv_id"],
+                    "req_type": "msg",
+                    "trn_dt": MSG,
+                    "tm_stm": now_time
+                }
+            )
         )
-    )
+    else:
+        err_pop("Current WebSocket not accessible")
+
 
     add_pending(gnr["snd_id"], gnr["rcv_id"], now_time, MSG)
