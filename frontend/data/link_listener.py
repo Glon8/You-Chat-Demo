@@ -2,10 +2,9 @@ import json
 import threading
 import time
 
-from .values import get_WS, cnt
+from .values import get_WS, cnt, set_LD, get_ERR, set_ERR
 from .helpers import add_pending, err_pop, file_update, getDir
 from .update import update
-from .connect import cnn, cnn_sufix
 
 _KILL = False
 
@@ -52,6 +51,9 @@ def lnk_lst():
                 file_update(getDir(), 'contacts.json', cnt)
         except Exception:
             err_pop("Link listener has been crashed")
+            set_LD(True)
+            if not get_ERR():
+                set_ERR("[Current WebSocket not accessible]")
             break
 
 
