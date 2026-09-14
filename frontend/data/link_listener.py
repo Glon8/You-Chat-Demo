@@ -50,10 +50,10 @@ def lnk_lst():
                 # overwrite contacts - save
                 file_update(getDir(), 'contacts.json', cnt)
         except Exception:
-            err_pop("Link listener has been crashed")
             set_LD(True)
             if not get_ERR():
                 set_ERR("[Current WebSocket not accessible]")
+            err_pop("Link listener has been crashed")
             break
 
 
