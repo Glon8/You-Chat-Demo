@@ -52,11 +52,7 @@ def lnk_lst():
                 file_update(getDir(), 'contacts.json', cnt)
         except Exception:
             err_pop("Link listener has been crashed")
-            # call for connection, includes pinging check
-            cnn()
-            # call for error clearing and update call
-            cnn_sufix()
-            continue
+            break
 
 
 def listen():
