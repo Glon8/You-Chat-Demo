@@ -2,6 +2,7 @@ import json
 import os
 import sys
 import random
+import time
 
 from pathlib import Path
 
@@ -106,7 +107,8 @@ def file_update(file_path, file_name, data):
 
 
 def add_pending(snd_id, rcv_id, timestamp, message):
-    pnd.append({'snd_id': snd_id, 'rcv_id': rcv_id, 'tm_stm': timestamp, 'msg': message})
+    rcv_tm = time.time()
+    pnd.append({'snd_id': snd_id, 'rcv_id': rcv_id, 'tm_stm': timestamp, 'rcv_tm_stm': rcv_tm, 'msg': message})
 
 
 def err_pop(message):

@@ -64,15 +64,19 @@ def msg_lst(cnt_id, cnt_name):
 
             message = chat[msg_cnt]
             sender = message['snd_id']
+            t = -1
 
-            if sender == cnt_id:
-                name = cnt_name
-            elif sender == user:
+            if sender == user:
                 name = 'Me'
+                t = message['tm_stm']
+            elif sender == cnt_id:
+                name = cnt_name
             else:
                 name = cnt_id
 
-            t = message['tm_stm']
+            if sender != user:
+                t = message['rcv_tm_stm']
+
             dt = datetime.fromtimestamp(t)
 
             print(

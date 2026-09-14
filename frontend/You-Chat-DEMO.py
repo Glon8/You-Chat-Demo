@@ -1,7 +1,7 @@
 from data.visuals import render
 from data.link_update import lnk_upd
 from data.send import snd
-from data.connect import cnn
+from data.connect import cnn_ext
 from data.disconnect import dsc
 from data.helpers import config_load, message_load, contacts_load
 from data.receiver_update import upd_rcv
@@ -43,7 +43,7 @@ def main():
 
     message_load()
 
-    cnn()
+    cnn_ext()
 
     manage()
 

@@ -1,5 +1,5 @@
 from .values import op
-from .connect import cnn, stop_waiting
+from .connect import cnn_ext, stop_waiting
 from .helpers import file_update, getDir
 
 
@@ -12,4 +12,4 @@ def lnk_upd():
 
     stop_waiting()
 
-    cnn()
+    cnn_ext()
