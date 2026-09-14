@@ -44,28 +44,20 @@ def cnn():
                 }
             )
         )
+        # starting to listen to the relay
+        listen()
+        # cleaning connection errors cause
+        set_LD(False)  # < cleaning error lock
+        set_ERR('')  # < cleaning error message
+        # wait for registration to take place
+        time.sleep(0.3)
+        # send update call to every contact in a list
+        for key, cnt_info in cnt.items():
+            update(key, None)
     except Exception:
         set_LD(True)
         if not get_ERR():
             set_ERR("[Current WebSocket not accessible]")
-
-
-def cnn_sufix():
-    # cleaning connection errors cause
-    set_LD(False)  # < cleaning error lock
-    set_ERR('')  # < cleaning error message
-    # wait for registration to take place
-    time.sleep(0.3)
-    # send update call to every contact in a list
-    for key, cnt_info in cnt.items():
-        update(key, None)
-
-
-def cnn_ext():
-    cnn()
-    # starting to listen to the relay
-    listen()
-    cnn_sufix()
 
 
 def wait_ping():
