@@ -1,4 +1,4 @@
-# Messenger Demo
+# Messager Demo
 
 This project is a **demo and prototype** for a future messaging product based on a new approach to communication.
 
