@@ -7,7 +7,6 @@ from .helpers import add_pending, err_pop
 
 def snd():
     gnr = op["gnr"]
-    ws = get_WS()
 
     if not gnr["rcv_id"]:
         err_pop("No receiver has been selected")
@@ -20,8 +19,8 @@ def snd():
     now_time = time.time()
     MSG = input("message > ")
 
-    if ws:
-        ws.send(
+    try:
+        get_WS().send(
             json.dumps(
                 {
                     "snd_id": gnr["snd_id"],
@@ -32,7 +31,7 @@ def snd():
                 }
             )
         )
-    else:
-        err_pop("Current WebSocket not accessible")
+    except Exception as e:
+        err_pop("Error: Failed to send the message")
 
     add_pending(gnr["snd_id"], gnr["rcv_id"], now_time, MSG)

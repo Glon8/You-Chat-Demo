@@ -13,20 +13,18 @@ def dsc():
 
     file_update(getDir(), 'config.json', gnr)
 
-    ws = get_WS()
-
-    if not ws:
-        stop_waiting()
-    else:
-        ws.send(
+    try:
+        get_WS().send(
             json.dumps(
                 {
-                     "snd_id": gnr["snd_id"],
-                     "req_type": "dsc",
+                    "snd_id": gnr["snd_id"],
+                    "req_type": "dsc",
                 }
             )
         )
 
         dont_listen()
+    except Exception as e:
+        stop_waiting()
 
     set_ERR('')

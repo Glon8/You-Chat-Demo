@@ -35,7 +35,8 @@ def msg_mng():
                 msg_instance(chat_id)
             # check for a duplicate message by timestamp and value
             if not any(
-                    data.get('tm_stm') == package.get('tm_stm')
+                    data.get('snd_id') == package.get('snd_id')
+                    and data.get('tm_stm') == package.get('tm_stm')
                     and data.get('msg') == package.get('msg')
                     for data in msg[chat_id]
             ):

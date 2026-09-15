@@ -2,6 +2,7 @@ import time
 import json
 
 from .values import cnt, msg, get_WS, op
+from .helpers import err_pop
 
 
 def update(cnt_id, timestamp):
@@ -27,19 +28,22 @@ def update(cnt_id, timestamp):
 
         if chat:
             for message in chat:
-                if message.get('tm_stm') > tm_stm:
+                if message.get('tm_stm') > tm_stm and message.get('snd_id') == op.get('gnr').get('snd_id'):
                     package.append(message)
 
     MSG = {'tm_stm': tm_stm, 'msg_snc': package}
 
-    get_WS().send(
-        json.dumps(
-            {
-                "snd_id": op.get('gnr').get("snd_id"),
-                "rcv_id": cnt_id,
-                "req_type": "upd",
-                "trn_dt": MSG,
-                "tm_stm": time.time()
-            }
+    try:
+        get_WS().send(
+            json.dumps(
+                {
+                    "snd_id": op.get('gnr').get("snd_id"),
+                    "rcv_id": cnt_id,
+                    "req_type": "upd",
+                    "trn_dt": MSG,
+                    "tm_stm": time.time()
+               }
+            )
         )
-    )
+    except Exception as e:
+        err_pop('Error: Failed to send the update!')
