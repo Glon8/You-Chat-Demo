@@ -45,7 +45,7 @@ The client currently requires:
 * [`websocket-client`](https://pypi.org/project/websocket-client/) — WebSocket communication
 * [`requests`](https://pypi.org/project/requests/) — HTTP requests
 
-### Client Installation
+## Client Installation
 
 #### 1. Install dependencies
 
@@ -77,7 +77,7 @@ On first launch, the client may create three JSON files:
 * **`contacts.json`** — Stores the user's contacts and their associated metadata.
 * **`config.json`** — Stores essential client state and configuration.
 
-### Basic Usage
+## Basic Usage
 
 The simplest way to get started is:
 
@@ -89,6 +89,24 @@ The simplest way to get started is:
 > **Note:** If the connection to the relay is lost, you currently need to reconnect manually using `upd_lnk`.
 
 While using `vmsg`, the client is currently unable to send messages. This limitation may be removed in a future.
+
+### Relay Link Format
+
+When using `upd_lnk`, provide **only the relay namespace/address**. Do not include the protocol (`http://` or `https://`) or any other URL prefix.
+
+**Examples:**
+
+```text
+https://chatgpt.com/          ❌ Wrong
+chatgpt.com                   ✅ Correct
+
+11.12.13.14                  ❌ Wrong
+http://11.12.13.14           ❌ Wrong
+http://11.12.13.14:0000      ❌ Wrong
+11.12.13.14:0000             ✅ Correct
+```
+
+The link should contain only the **host/namespace and, when required, the port**.
 
 ## Testing Goals
 
