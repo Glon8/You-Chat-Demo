@@ -8,7 +8,7 @@ def rcnt():
     if contact not in cnt and not any(data.get("name") == contact for data in cnt.values()):
         err_pop("Provided user not in contacts")
         return
-    
+
     if contact in cnt:
         cnt_id = contact
     else:

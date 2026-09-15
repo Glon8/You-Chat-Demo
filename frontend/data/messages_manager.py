@@ -30,15 +30,15 @@ def msg_mng():
                 chat_id = '.trash'
             # convert chat_id to string
             chat_id = str(chat_id)
+            # if no chat with such id, create one
+            if chat_id not in msg:
+                msg_instance(chat_id)
             # check for a duplicate message by timestamp and value
             if not any(
                     data.get('tm_stm') == package.get('tm_stm')
                     and data.get('msg') == package.get('msg')
                     for data in msg[chat_id]
             ):
-                # if no chat with such id, create one
-                if chat_id not in msg:
-                    msg_instance(chat_id)
                 # pass the package to the chat
                 msg[chat_id].append(package)
                 # if chat_id is a contact, add it to received list

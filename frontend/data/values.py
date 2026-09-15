@@ -24,7 +24,6 @@ _PENDING = []
 
 _SEPERATOR = "========================<"
 
-_LINK_DOWN = False
 _WEBSOCKET = None
 
 _ERROR_MESSAGE = ''
@@ -32,7 +31,6 @@ _ERROR_MESSAGE = ''
 op = _OPERATIONS
 spr = _SEPERATOR
 pnd = _PENDING
-ld = _LINK_DOWN
 msg = _MESSAGES
 cnt = _CONTACTS
 
@@ -44,13 +42,6 @@ def get_WS():
 def set_WS(new):
     global _WEBSOCKET
     _WEBSOCKET = new
-
-
-def set_LD(new):
-    global _LINK_DOWN
-    if not isinstance(new, bool):
-        return
-    _LINK_DOWN = new
 
 
 def set_ERR(new):

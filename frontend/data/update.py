@@ -15,15 +15,20 @@ def update(cnt_id, timestamp):
     if timestamp:
         tm_stm = None
 
-        for message in chat:
-            if message.get('tm_stm') > timestamp:
-                package.append(message)
+        if chat:
+            for message in chat:
+                if message.get('tm_stm') > timestamp:
+                    package.append(message)
     else:
-        tm_stm = cnt.get(cnt_id).get('last_seen')
+        if not chat:
+            chat = []
 
-        for message in chat:
-            if message.get('tm_stm') > tm_stm:
-                package.append(message)
+        tm_stm = max((m.get('tm_stm') for m in chat if m.get('snd_id') == cnt_id), default=None) or cnt.get(cnt_id).get('last_seen')
+
+        if chat:
+            for message in chat:
+                if message.get('tm_stm') > tm_stm:
+                    package.append(message)
 
     MSG = {'tm_stm': tm_stm, 'msg_snc': package}
 

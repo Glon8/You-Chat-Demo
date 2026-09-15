@@ -2,7 +2,7 @@ import json
 import threading
 import time
 
-from .values import get_WS, cnt, set_LD, get_ERR, set_ERR
+from .values import get_WS, cnt, get_ERR, set_ERR
 from .helpers import add_pending, err_pop, file_update, getDir
 from .update import update
 
@@ -49,8 +49,7 @@ def lnk_lst():
                 cnt[snd]['last_seen'] = time.time()
                 # overwrite contacts - save
                 file_update(getDir(), 'contacts.json', cnt)
-        except Exception:
-            set_LD(True)
+        except Exception as e:
             if not get_ERR():
                 set_ERR("[Current WebSocket not accessible]")
             err_pop("Link listener has been crashed")
