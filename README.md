@@ -28,7 +28,7 @@ The backend may use:
 
 ### Client
 
-The current client is written in Python and uses socket-based communication.
+The current client is written in **Python 3** and uses socket-based communication.
 
 The Python client can potentially run in multiple environments:
 
@@ -36,6 +36,59 @@ The Python client can potentially run in multiple environments:
 * Termux on Android devices
 * Windows Shell
 * Linux terminals
+
+#### Dependencies
+
+The client currently requires:
+
+* **Python 3**
+* [`websocket-client`](https://pypi.org/project/websocket-client/) — WebSocket communication
+* [`requests`](https://pypi.org/project/requests/) — HTTP requests
+
+### Client Installation
+
+#### 1. Install dependencies
+
+Make sure **Python 3** is installed, then install the required Python packages:
+
+```bash
+pip install websocket-client requests
+```
+
+#### 2. Enter the client directory
+
+From the project root, enter the `frontend` folder:
+
+```bash
+cd frontend
+```
+
+#### 3. Start the client
+
+Run the client using Python 3:
+
+```bash
+python3 You-Chat-DEMO.py
+```
+
+On first launch, the client may create three JSON files:
+
+* **`chats.json`** — Stores all chats, including trashed chats and self-notes.
+* **`contacts.json`** — Stores the user's contacts and their associated metadata.
+* **`config.json`** — Stores essential client state and configuration.
+
+### Basic Usage
+
+The simplest way to get started is:
+
+1. Use `upd_lnk` to add a link to a relay, if one is not already configured.
+2. Use `upd_rcv` to add a receiver.
+3. Use `snd` to send a message.
+4. Use `vmsg` to view existing and incoming messages.
+
+> **Note:** If the connection to the relay is lost, you currently need to reconnect manually using `upd_lnk`.
+
+While using `vmsg`, the client is currently unable to send messages. This limitation may be removed in a future.
 
 ## Testing Goals
 
