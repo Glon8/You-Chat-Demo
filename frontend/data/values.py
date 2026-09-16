@@ -1,6 +1,8 @@
+_SUB_SEPERATOR = "-------------------<"
+
 _OPERATIONS = {
     "gnr": {
-        "ws_lnk": "ws://localhost:5173",
+        "ws_lnk": "ws://",
         "snd_id": 0,
         "rcv_id": 0,
     },
@@ -9,9 +11,15 @@ _OPERATIONS = {
         "* upd_rcv - update the receiver",
         "* snd     - send a message",
         "* dsc     - disconnect from relay",
+        _SUB_SEPERATOR + ' Contacts',
         "* vcnt    - view contacts",
         "* acnt    - add contact",
         "* rcnt    - remove contact",
+        _SUB_SEPERATOR + ' Relays',
+        "* vrel    - view relay",
+        "* arel    - add relay",
+        "* rrel    - remove relay",
+        _SUB_SEPERATOR + ' Messages',
         "* vmsg    - view messages",
     ],
 }
@@ -22,7 +30,10 @@ _CONTACTS = {}
 
 _PENDING = []
 
+_RELAYS = []
+
 _SEPERATOR = "========================<"
+_SUB_SEPERATOR = "-------------------<"
 
 _WEBSOCKET = None
 
@@ -33,6 +44,7 @@ spr = _SEPERATOR
 pnd = _PENDING
 msg = _MESSAGES
 cnt = _CONTACTS
+rel = _RELAYS
 
 
 def get_WS():

@@ -10,7 +10,6 @@ def render():
         if key == 'gnr':
             print(f'{spr} GENERAL')
 
-
             for name, value in item.items():
                 if name == 'rcv_id':
                     cnt_info = cnt.get(value)

@@ -3,6 +3,10 @@ from .helpers import write_file, getDir, err_pop
 
 
 def rcnt():
+    if not cnt:
+        err_pop("Contacts list is empty")
+        return
+
     contact = input('contact name or id > ')
 
     if contact not in cnt and not any(data.get("name") == contact for data in cnt.values()):

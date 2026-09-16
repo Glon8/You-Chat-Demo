@@ -42,7 +42,7 @@ def update(cnt_id, timestamp):
                     "req_type": "upd",
                     "trn_dt": MSG,
                     "tm_stm": time.time()
-               }
+                }
             )
         )
     except Exception as e:

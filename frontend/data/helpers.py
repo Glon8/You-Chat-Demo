@@ -6,7 +6,7 @@ import time
 
 from pathlib import Path
 
-from .values import op, msg, cnt, pnd
+from .values import op, pnd, rel
 
 
 def getDir():
@@ -47,8 +47,6 @@ def config_load():
     else:
         gnr["snd_id"] = str(random.randint(1000, 9999))
 
-        gnr["ws_lnk"] = "ws://localhost:5173"
-
         data = {}
 
         for key, val in gnr.items():
@@ -57,40 +55,34 @@ def config_load():
         write_file(getDir(), 'config.json', data)
 
 
-def message_load():
-    data = read_file(f'{getDir()}/chats.json')
+def def_component_loader(file_name, local_var):
+    data = read_file(f'{getDir()}/{file_name}.json')
 
     if data:
         data = json.loads(data)
-
         # strict verification needed
         if not data:
             return
 
         for key, val in data.items():
-            msg[key] = val
+            local_var[key] = val
     else:
-        data = {}
-
-        write_file(getDir(), 'chats.json', data)
+        write_file(getDir(), f'{file_name}.json', {})
 
 
-def contacts_load():
-    data = read_file(f'{getDir()}/contacts.json')
+def relays_load():
+    data = read_file(f'{getDir()}/relays.json')
 
     if data:
         data = json.loads(data)
-
         # strict verification needed
         if not data:
             return
 
-        for key, val in data.items():
-            cnt[key] = val
+        for item in data:
+            rel.append(item)
     else:
-        data = {}
-
-        write_file(getDir(), 'contacts.json', data)
+        write_file(getDir(), 'relays.json', [])
 
 
 def file_update(file_path, file_name, data):
@@ -102,6 +94,19 @@ def file_update(file_path, file_name, data):
         saved_data = {}
 
     saved_data.update(data)
+
+    write_file(file_path, file_name, saved_data)
+
+
+def alt_file_update(file_path, file_name, data):
+    saved_data = read_file(file_name)
+
+    if saved_data:
+        saved_data = json.loads(saved_data)
+    else:
+        saved_data = []
+
+    saved_data = saved_data + [item for item in data if item not in saved_data]
 
     write_file(file_path, file_name, saved_data)
 
