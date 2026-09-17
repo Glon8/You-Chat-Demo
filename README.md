@@ -26,6 +26,25 @@ The backend may use:
 * CORS
 * JavaScript
 
+### Client
+
+The current client is written in **Python 3** and uses socket-based communication.
+
+The Python client can potentially run in multiple environments:
+
+* Console
+* Termux on Android devices
+* Windows Shell
+* Linux terminals
+
+#### Dependencies
+
+The client currently requires:
+
+* **Python 3**
+* [`websocket-client`](https://pypi.org/project/websocket-client/) — WebSocket communication
+* [`requests`](https://pypi.org/project/requests/) — HTTP requests
+
 ## Relay / Server Installation
 
 #### 1. Install dependencies
@@ -64,25 +83,6 @@ If everything is configured correctly, the console should display:
 
 Server started at port: 5000
 ```
-
-### Client
-
-The current client is written in **Python 3** and uses socket-based communication.
-
-The Python client can potentially run in multiple environments:
-
-* Console
-* Termux on Android devices
-* Windows Shell
-* Linux terminals
-
-#### Dependencies
-
-The client currently requires:
-
-* **Python 3**
-* [`websocket-client`](https://pypi.org/project/websocket-client/) — WebSocket communication
-* [`requests`](https://pypi.org/project/requests/) — HTTP requests
 
 ## Client Installation
 
