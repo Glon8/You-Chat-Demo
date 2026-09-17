@@ -121,10 +121,13 @@ On first launch, the client may create three JSON files:
 
 The simplest way to get started is:
 
-1. Use `cnn` to add a link to a relay, if one is not already configured.
-2. Use `rcv` to add a receiver.
-3. Use `snd` to send a message.
-4. Use `vmsg` to view existing and incoming messages.
+Add a new relay if have none:
+1. Use `arel` to add a new relay to your relays list, if one is not already configured.
+2. Use `cnn` to select a relay for connection, the one you added.
+3. Use `acnt` to add a new contact, if one is not already configured.
+3. Use `rcv` to select a receiver, from the contacts.
+4. Use `snd` to send a message.
+5. Use `vmsg` to view existing and incoming messages.
 
 > **Note:** If the connection to the relay is lost, you currently need to reconnect manually using `rec`.
 
