@@ -26,6 +26,45 @@ The backend may use:
 * CORS
 * JavaScript
 
+## Relay / Server Installation
+
+#### 1. Install dependencies
+
+Make sure **Node.js** and **npm** are installed on your system.
+
+#### 2. Enter the backend directory
+
+From the project root, navigate to the `backend` folder using a console or your preferred editor:
+
+```bash
+cd backend
+```
+
+#### 3. Install the required packages
+
+Install the backend dependencies using npm:
+
+```bash
+npm i
+```
+
+#### 4. Start the relay/server
+
+Start the server using:
+
+```bash
+npm start
+```
+
+If everything is configured correctly, the console should display:
+
+```text
+> backend@1.0.0 start
+> node server.js
+
+Server started at port: 5000
+```
+
 ### Client
 
 The current client is written in **Python 3** and uses socket-based communication.
@@ -81,18 +120,18 @@ On first launch, the client may create three JSON files:
 
 The simplest way to get started is:
 
-1. Use `upd_lnk` to add a link to a relay, if one is not already configured.
-2. Use `upd_rcv` to add a receiver.
+1. Use `cnn` to add a link to a relay, if one is not already configured.
+2. Use `rcv` to add a receiver.
 3. Use `snd` to send a message.
 4. Use `vmsg` to view existing and incoming messages.
 
-> **Note:** If the connection to the relay is lost, you currently need to reconnect manually using `upd_lnk`.
+> **Note:** If the connection to the relay is lost, you currently need to reconnect manually using `rec`.
 
 While using `vmsg`, the client is currently unable to send messages. This limitation may be removed in a future.
 
 ### Relay Link Format
 
-When using `upd_lnk`, provide **only the relay namespace/address**. Do not include the protocol (`http://` or `https://`) or any other URL prefix.
+When using `cnn`, provide **only the relay namespace/address**. Do not include the protocol (`http://` or `https://`) or any other URL prefix.
 
 **Examples:**
 
