@@ -38,3 +38,5 @@ def rnd_err():
 
     if err_msg:
         print(err_msg)
+    else:
+        print("[ EVERYTHING IS GOOD! ]")

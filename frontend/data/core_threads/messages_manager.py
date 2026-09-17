@@ -1,7 +1,7 @@
 import threading
 
-from .values import op, pnd, msg, msg_instance
-from .helpers import file_update, getDir
+from ..values import op, pnd, msg, msg_instance
+from ..helpers import file_update, getDir
 
 _KILL = False
 

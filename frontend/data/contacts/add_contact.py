@@ -1,7 +1,7 @@
 import time
 
-from .values import cnt
-from .helpers import file_update, getDir
+from ..values import cnt
+from ..helpers import file_update, getDir
 
 
 def acnt():

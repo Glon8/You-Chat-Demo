@@ -1,5 +1,5 @@
-from .values import rel
-from .helpers import write_file, getDir, err_pop
+from ..values import rel
+from ..helpers import write_file, getDir, err_pop
 
 
 def rrel():

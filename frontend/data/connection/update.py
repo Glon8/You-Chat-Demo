@@ -1,8 +1,8 @@
 import time
 import json
 
-from .values import cnt, msg, get_WS, op
-from .helpers import err_pop
+from ..values import cnt, msg, get_WS, op
+from ..helpers import err_pop
 
 
 def update(cnt_id, timestamp):
@@ -24,7 +24,8 @@ def update(cnt_id, timestamp):
         if not chat:
             chat = []
 
-        tm_stm = max((m.get('tm_stm') for m in chat if m.get('snd_id') == cnt_id), default=None) or cnt.get(cnt_id).get('last_seen')
+        tm_stm = max((m.get('tm_stm') for m in chat if m.get('snd_id') == cnt_id), default=None) or cnt.get(cnt_id).get(
+            'last_seen')
 
         if chat:
             for message in chat:

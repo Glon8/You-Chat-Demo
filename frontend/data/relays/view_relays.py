@@ -1,4 +1,4 @@
-from .values import rel, spr, _SUB_SEPERATOR
+from ..values import rel, spr, _SUB_SEPERATOR
 
 
 def vrel():

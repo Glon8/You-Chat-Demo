@@ -1,19 +1,25 @@
+# GENERAL
 from data.visuals import render
-from data.link_update import lnk_upd
-from data.send import snd
-from data.connect import cnn
-from data.disconnect import dsc
 from data.helpers import config_load, def_component_loader, relays_load
-from data.receiver_update import upd_rcv
-from data.add_contact import acnt
-from data.view_contacts import vcnt
-from data.view_messages import vmsg
-from data.remove_contact import rcnt
-from data.messages_manager import manage
 from data.values import cnt, msg
-from data.view_relays import vrel
-from data.add_relay import arel
-from data.remove_relay import rrel
+# CONNECTION
+from data.connection.link_update import lnk_upd
+from data.connection.connect import cnn
+from data.connection.disconnect import dsc
+# CORE_THREADS
+from data.core_threads.messages_manager import manage
+# CONTACTS
+from data.contacts.add_contact import acnt
+from data.contacts.remove_contact import rcnt
+from data.contacts.view_contacts import vcnt
+from data.contacts.receiver_update import upd_rcv
+# RELAYS
+from data.relays.view_relays import vrel
+from data.relays.add_relay import arel
+from data.relays.remove_relay import rrel
+# MESSAGES
+from data.messages.send import snd
+from data.messages.view_messages import vmsg
 
 
 def control_panel():
@@ -21,27 +27,32 @@ def control_panel():
         render()
 
         npt = input("> ")
-
-        if npt == "upd_lnk":
+        # ========================< GENERAL
+        if npt == "cnn":
             lnk_upd()
-        if npt == "upd_rcv":
+        if npt == "rcv":
             upd_rcv()
         if npt == "snd":
             snd()
         if npt == "dsc":
             dsc()
+        if npt == "rec":
+            cnn()
+        # ========================< CONTACTS
         if npt == "vcnt":
             vcnt()
         if npt == "acnt":
             acnt()
         if npt == "rcnt":
             rcnt()
+        # ========================< RELAYS
         if npt == "vrel":
             vrel()
         if npt == "arel":
             arel()
         if npt == "rrel":
             rrel()
+        # ========================< MESSAGES
         if npt == "vmsg":
             vmsg()
 

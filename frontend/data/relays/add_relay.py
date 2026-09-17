@@ -1,5 +1,5 @@
-from .values import rel
-from .helpers import alt_file_update, getDir
+from ..values import rel
+from ..helpers import alt_file_update, getDir
 
 
 def arel():

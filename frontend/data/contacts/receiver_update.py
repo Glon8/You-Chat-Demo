@@ -1,11 +1,11 @@
-from .values import op, cnt
-from .helpers import file_update, getDir, err_pop
+from ..values import op, cnt
+from ..helpers import file_update, getDir, err_pop
 
 
 def upd_rcv():
     gnr = op['gnr']
 
-    rcv = input("new receiver > ")
+    rcv = input("contact number or name> ")
 
     rcv_in_cnt_name = any(data.get("name") == rcv for data in cnt.values())
 

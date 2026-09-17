@@ -3,10 +3,10 @@ import websocket
 import json
 import time
 
-from .values import op, set_WS, set_ERR, get_ERR, cnt
-from .link_listener import listen
+from ..values import op, set_WS, set_ERR, get_ERR, cnt
+from ..core_threads.link_listener import listen
 from .update import update
-from .ping import relay_ping
+from ..relay_api.ping import relay_ping
 
 _KILL = False
 ping = True

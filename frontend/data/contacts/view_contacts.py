@@ -1,4 +1,4 @@
-from .values import cnt, spr
+from ..values import cnt, spr
 
 
 def vcnt():

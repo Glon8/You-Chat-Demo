@@ -1,8 +1,8 @@
 import json
 import time
 
-from .values import op, get_WS, cnt
-from .helpers import add_pending, err_pop
+from ..values import op, get_WS, cnt
+from ..helpers import add_pending, err_pop
 
 
 def snd():

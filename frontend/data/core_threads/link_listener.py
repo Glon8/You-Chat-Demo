@@ -2,9 +2,9 @@ import json
 import threading
 import time
 
-from .values import get_WS, cnt, get_ERR, set_ERR
-from .helpers import add_pending, err_pop, file_update, getDir
-from .update import update
+from ..values import get_WS, cnt, get_ERR, set_ERR
+from ..helpers import add_pending, err_pop, file_update, getDir
+from ..connection.update import update
 
 _KILL = False
 

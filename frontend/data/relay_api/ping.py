@@ -1,6 +1,6 @@
 import requests
 
-from .values import op
+from ..values import op
 
 
 def relay_ping():
