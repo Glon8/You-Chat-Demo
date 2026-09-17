@@ -115,6 +115,7 @@ On first launch, the client may create three JSON files:
 * **`chats.json`** — Stores all chats, including trashed chats and self-notes.
 * **`contacts.json`** — Stores the user's contacts and their associated metadata.
 * **`config.json`** — Stores essential client state and configuration.
+* **`relays.json`** — Stores relay's associated metadata.
 
 ## Basic Usage
 
