@@ -8,10 +8,7 @@ export const ping = (req, res) => {
 
     const snd = get_user(snd_id);
 
-    if (!snd) {
-        res.sendStatus(200);
-        return;
-    }
+    if (!snd) { res.sendStatus(200); return; }
 
     const snd_sync = snd.rel_sync;
 
@@ -26,10 +23,7 @@ export const rel_upd = (req, res) => {
 
     const relays = get_relays();
 
-    if (data && data.length > 0)
-        data.forEach(it => {
-            if (!relays.has(it)) add_relay(it);
-        });
+    if (data && data.length > 0) data.forEach(it => { if (!relays.has(it)) add_relay(it); });
 
     if (get_user(snd_id)) upd_rel_sync(snd_id);
 }
