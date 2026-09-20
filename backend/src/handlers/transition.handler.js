@@ -1,4 +1,4 @@
-import { get_user, upd_xphrt } from "../data/users.data.js";
+import { get_user, upd_ls } from "../data/users.data.js";
 import { ping_check } from "./heartbeat.handler.js";
 
 export const transfer = async (req_type, data) => {
@@ -19,12 +19,12 @@ export const transfer = async (req_type, data) => {
 
     let ping_state = true;
     // checking if reciever has positive heartbeat
-    if (rcv && Date.now() > rcv.xphrt) {
+    if (rcv && Date.now() > 5 * 1000 + rcv.ls) {
         console.log(`[Starting Ping-Pong]>[${rcv_id}]`);
-        
+
         ping_state = await ping_check(rcv.sck, 5);
 
-        if (ping_state) { upd_xphrt(rcv_id); console.log(`[${rcv_id}]>[Pong received]`); }
+        if (ping_state) { upd_ls(rcv_id); console.log(`[${rcv_id}]>[Pong received]`); }
         else { console.log(`[${rcv_id}]>[No Pong]`); return true; }
     }
     // transfer data routed to reciever

@@ -1,4 +1,4 @@
-import { add_user, get_user, upd_xphrt } from "../data/users.data.js";
+import { add_user, get_user, upd_ls } from "../data/users.data.js";
 import { ping_check } from "./heartbeat.handler.js";
 
 export const connect = async (req_type, snd_id, socket) => {
@@ -14,7 +14,7 @@ export const connect = async (req_type, snd_id, socket) => {
     if (snd && Date.now() > snd.xphrt) {
         ping_state = await ping_check(snd.sck, 5);
 
-        if (ping_state) upd_xphrt(snd_id);
+        if (ping_state) upd_ls(snd_id);
     }
 
     // check heart beat of registered user and the socket

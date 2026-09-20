@@ -2,10 +2,9 @@ const users = {};
 /*
     users list, will include PER USER: 
     user id certificate: {
-        socket,              // < sck
-        connceted_since,     // < cnn_snc
-        expired_heartrate,   // < xphrt
-        last_seen,           // < ls
+        socket,               // < sck
+        last_seen,            // < ls
+        relay_syncronisation, // < rel_sync
     }
 */
 export const get_user = (user_id) => users[user_id];
@@ -17,13 +16,15 @@ export const add_user = (user_data) => {
 
     const date = Date.now()
 
-    users[snd_id] = { sck, cnn_snc: date, xphrt: date + (5 * 1000), }
+    users[snd_id] = { sck, ls: date, rel_sync: date }
 
     return true;
 }
 
 export const rmv_user = (user_id) => delete users[user_id];
 
-export const upd_xphrt = (user_id) => users[user_id].xphrt = Date.now() + (5 * 1000);
+export const upd_ls = (user_id) => users[user_id].ls = Date.now();
+
+export const upd_rel_sync = (user_id) => users[user_id].rel_sync = Date.now();
 
 export const upd_sck = (user_id, socket) => users[user_id].sck = socket;
