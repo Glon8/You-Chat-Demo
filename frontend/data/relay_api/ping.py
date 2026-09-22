@@ -1,6 +1,7 @@
 import requests
 
 from ..values import op
+from .relay_update import rel_upd
 
 
 def relay_ping():
@@ -8,15 +9,26 @@ def relay_ping():
 
     http_address = ws_lnk.replace("ws://", "http://", 1)
 
+    cln_id = op.get('gnr').get('snd_id')
+
+    dt = {"snd_id": cln_id}
+
     print(f'\r\n[Ping sent] {http_address}')
     try:
-        response = requests.get(http_address + '/api/ping', timeout=3)
+        response = requests.post(http_address + '/api/ping', json=dt, timeout=3)
 
-        res = response.status_code
+        stat = response.status_code
+        dt = response.json()
 
-        print(f'[Response code] {res}')
+        print(f'[Package received] {dt}')  # < For testing only!
 
-        return res == 200
+        if dt and dt.get('sync_stat') is True:
+            print(f'[Reply back to server]')  # < For testing only!
+            rel_upd()
+
+        print(f'[Response code] {stat}')
+
+        return stat == 200
     except requests.RequestException:
         print(f'[Response code] {404}')
 

@@ -10,7 +10,8 @@ def arel():
         {
             'link': rel_link,
             'name': name,
-            'last_seen': -1
+            'last_seen': -1,
+            'reported': None
         }
     )
 
