@@ -9,18 +9,19 @@ def rrel():
 
     relay = input('relay name or link > ')
 
-    item = next(
+    key = next(
         (
-            data for data in rel
-            if data.get("name") == relay or data.get("link") == 'ws://' + relay
-        ), None
+            name for name, data in rel.items()
+            if name == relay or data.get('link') == 'ws://' + relay
+        ),
+        None
     )
 
-    if not item:
+    if not key:
         err_pop("Relay isn't recognised")
         return
 
-    rel.remove(item)
+    rel.pop(key)
 
     write_file(getDir(), 'relays.json', rel)
 

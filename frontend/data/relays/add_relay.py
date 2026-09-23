@@ -1,18 +1,17 @@
+import time
+
 from ..values import rel
-from ..helpers import alt_file_update, getDir
+from ..helpers import file_update, getDir
 
 
 def arel():
     rel_link = "ws://" + input('relay link > ')
     name = input('relay name > ')
 
-    rel.append(
-        {
-            'link': rel_link,
-            'name': name,
-            'last_seen': -1,
-            'reported': None
-        }
-    )
+    rel[name] = {
+        'link': rel_link,
+        'last_seen': time.time(),
+        'reported': False
+    }
 
-    alt_file_update(getDir(), 'relays.json', rel)
+    file_update(getDir(), 'relays.json', rel)

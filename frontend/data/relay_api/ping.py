@@ -18,18 +18,19 @@ def relay_ping():
         response = requests.post(http_address + '/api/ping', json=dt, timeout=3)
 
         stat = response.status_code
-        dt = response.json()
 
-        print(f'[Package received] {dt}')  # < For testing only!
+        try:
+            dt = response.json()
+        except Exception as e:
+            dt = None
 
         if dt and dt.get('sync_stat') is True:
-            print(f'[Reply back to server]')  # < For testing only!
             rel_upd()
 
         print(f'[Response code] {stat}')
 
         return stat == 200
-    except requests.RequestException:
+    except Exception as e:
         print(f'[Response code] {404}')
 
         return False

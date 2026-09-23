@@ -81,7 +81,7 @@ def msg_lst(cnt_id, cnt_name):
 
             print(
                 f"[{name}]"
-                f"[{dt.hour:02d}:{dt.minute:02d}:{dt.second:02d}]:"
+                f"[{dt.day:02d}.{dt.month:02d}.{dt.year:02d} - {dt.hour:02d}:{dt.minute:02d}:{dt.second:02d}]:"
                 f"{message['msg']}\r\n"
             )
 

@@ -3,7 +3,7 @@ import websocket
 import json
 import time
 
-from ..values import op, set_WS, set_ERR, get_ERR, cnt
+from ..values import op, set_WS, set_ERR, get_ERR, cnt, get_WS
 from ..core_threads.link_listener import listen
 from .update import update
 from ..relay_api.ping import relay_ping
@@ -30,6 +30,12 @@ def cnn():
             daemon=True
         ).start()
         return
+
+    ws = get_WS()
+
+    if ws:
+        ws.close()
+
     try:
         ws = websocket.create_connection(gnr["ws_lnk"])
 

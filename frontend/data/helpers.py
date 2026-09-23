@@ -82,7 +82,7 @@ def relays_load():
         for item in data:
             rel.append(item)
     else:
-        write_file(getDir(), 'relays.json', [])
+        write_file(getDir(), 'relays.json', {})
 
 
 def file_update(file_path, file_name, data):
@@ -98,19 +98,6 @@ def file_update(file_path, file_name, data):
     write_file(file_path, file_name, saved_data)
 
 
-def alt_file_update(file_path, file_name, data):
-    saved_data = read_file(file_name)
-
-    if saved_data:
-        saved_data = json.loads(saved_data)
-    else:
-        saved_data = []
-
-    saved_data = saved_data + [item for item in data if item not in saved_data]
-
-    write_file(file_path, file_name, saved_data)
-
-
 def add_pending(snd_id, rcv_id, timestamp, message):
     rcv_tm = time.time()
     pnd.append({'snd_id': snd_id, 'rcv_id': rcv_id, 'tm_stm': timestamp, 'rcv_tm_stm': rcv_tm, 'msg': message})
@@ -119,3 +106,15 @@ def add_pending(snd_id, rcv_id, timestamp, message):
 def err_pop(message):
     print(f'[{message}]')
     input('Press ENTER to continue...')
+
+
+def def_reports():
+    gnr = op.get('gnr')
+
+    for key, item in rel.items():
+        if item.get("link") == gnr["ws_lnk"]:
+            item['reported'] = True
+        else:
+            item['reported'] = False
+
+    file_update(getDir(), 'relays.json', rel)

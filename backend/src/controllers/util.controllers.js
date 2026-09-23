@@ -4,7 +4,7 @@ import { get_relays, add_relay } from '../data/relays.data.js';
 export const ping = (req, res) => {
     console.log('[Ping received]')
 
-    const { snd_id } = req.body;
+    const { snd_id } = req.body ?? {};
 
     const snd = get_user(snd_id);
 
@@ -19,7 +19,7 @@ export const ping = (req, res) => {
 export const rel_upd = (req, res) => {
     console.log('[Relay Update received]');
 
-    const { snd_id, data } = req.body;
+    const { snd_id, data } = req.body ?? {};
 
     const relays = get_relays();
 

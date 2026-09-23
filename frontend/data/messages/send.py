@@ -32,6 +32,6 @@ def snd():
             )
         )
     except Exception as e:
-        err_pop("Error: Failed to send the message")
+        err_pop("Message has been STORED and NOT SENT")
 
     add_pending(gnr["snd_id"], gnr["rcv_id"], now_time, MSG)

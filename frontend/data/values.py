@@ -33,7 +33,7 @@ _CONTACTS = {}
 
 _PENDING = []
 
-_RELAYS = []
+_RELAYS = {}
 
 _SEPERATOR = "========================<"
 _SUB_SEPERATOR = "-------------------<"
