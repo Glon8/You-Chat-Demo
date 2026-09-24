@@ -5,7 +5,7 @@ from ..helpers import file_update, getDir
 
 
 def arel():
-    rel_link = "ws://" + input('relay link > ')
+    rel_link = "wss://" + input('relay link > ')
     name = input('relay name > ')
 
     rel[name] = {

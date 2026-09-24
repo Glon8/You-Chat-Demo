@@ -12,7 +12,7 @@ def rrel():
     key = next(
         (
             name for name, data in rel.items()
-            if name == relay or data.get('link') == 'ws://' + relay
+            if name == relay or data.get('link') == 'wss://' + relay
         ),
         None
     )

@@ -8,7 +8,7 @@ def lnk_upd():
 
     npt = input("Relay link or name > ")
 
-    rel_item = next((data for data in rel if data.get("name") == npt or data.get("link") == 'ws://' + npt), None)
+    rel_item = next((data for key, data in rel.items() if key == npt or data.get("link") == 'wss://' + npt), None)
 
     if rel_item:
         gnr["ws_lnk"] = rel_item.get('link')

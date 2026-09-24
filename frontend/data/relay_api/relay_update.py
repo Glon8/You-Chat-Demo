@@ -7,7 +7,7 @@ from ..helpers import err_pop
 def rel_upd():
     ws_lnk = op.get('gnr').get("ws_lnk")
 
-    http_address = ws_lnk.replace("ws://", "http://", 1)
+    http_address = ws_lnk.replace("wss://", "https://", 1)
 
     cnt_id = op.get('gnr').get('snd_id')
     dt = {
