@@ -2,7 +2,7 @@ _SUB_SEPERATOR = "-------------------<"
 
 _OPERATIONS = {
     "gnr": {
-        "ws_lnk": "ws://",
+        "ws_lnk": "wss://",
         "snd_id": 0,
         "rcv_id": 0,
     },
