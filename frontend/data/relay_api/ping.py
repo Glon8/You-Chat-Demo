@@ -31,6 +31,7 @@ def relay_ping():
 
         return stat == 200
     except Exception as e:
+        print(e)
         print(f'[Response code] {404}')
 
         return False

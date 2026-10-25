@@ -1,14 +1,14 @@
 # GENERAL
 from data.visuals import render
-from data.helpers import config_load, def_component_loader, def_reports
+from data.helpers import config_load, def_component_loader
 from data.values import cnt, msg, rel
 # CONNECTION
 from data.connection.link_update import lnk_upd
-from data.connection.connect import cnn, stop_waiting
+from data.connection.connect import cnn
 from data.connection.disconnect import dsc
+from data.connection.reconnect import rec
 # CORE_THREADS
 from data.core_threads.messages_manager import manage
-from data.core_threads.link_listener import dont_listen
 # CONTACTS
 from data.contacts.add_contact import acnt
 from data.contacts.remove_contact import rcnt
@@ -31,18 +31,10 @@ def control_panel():
         # ========================< GENERAL
         if npt == "cnn":
             lnk_upd()
-        if npt == "rcv":
-            upd_rcv()
-        if npt == "snd":
-            snd()
         if npt == "dsc":
             dsc()
         if npt == "rec":
-            def_reports()
-
-            dont_listen()
-
-            cnn()
+            rec()
         # ========================< CONTACTS
         if npt == "vcnt":
             vcnt()
@@ -50,6 +42,8 @@ def control_panel():
             acnt()
         if npt == "rcnt":
             rcnt()
+        if npt == "rcv":
+            upd_rcv()
         # ========================< RELAYS
         if npt == "vrel":
             vrel()
@@ -60,6 +54,8 @@ def control_panel():
         # ========================< MESSAGES
         if npt == "vmsg":
             vmsg()
+        if npt == "snd":
+            snd()
 
 
 def main():

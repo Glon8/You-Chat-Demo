@@ -35,6 +35,7 @@ def cnn():
 
     if ws:
         ws.close()
+        time.sleep(10)
 
     try:
         ws = websocket.create_connection(gnr["ws_lnk"])
@@ -60,7 +61,7 @@ def cnn():
             update(key, None)
     except Exception as e:
         if not get_ERR():
-            set_ERR("[Current WebSocket not accessible]")
+            set_ERR(f"[Current WebSocket not accessible]")
 
 
 def wait_ping():
