@@ -35,7 +35,7 @@ def cnn():
 
     if ws:
         ws.close()
-        time.sleep(10)
+        time.sleep(10)  # < temporary solution, for async await issue (useEffect on js)
 
     try:
         ws = websocket.create_connection(gnr["ws_lnk"])
@@ -70,6 +70,12 @@ def wait_ping():
 
     if not get_ERR():
         set_ERR("[No ping for current WebSocket]")
+    # RELAY SLEEP check
+    # await shortly
+    time.sleep(10)
+    # ping to check if relay already awaken
+    ping = relay_ping()
+    # HEART BEAT check
     # pinging until positive reply
     while not ping:
         time.sleep(60)

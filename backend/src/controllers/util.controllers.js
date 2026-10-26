@@ -12,7 +12,7 @@ export const ping = (req, res) => {
 
     const snd_sync = snd.rel_sync;
 
-    if (snd_sync && Date.now() < snd_sync + 1000 * 60 * 60) res.sendStatus(200);
+    if (snd_sync && Date.now() <= snd_sync + 1000 * 60 * 60) res.sendStatus(200);
     else { res.json({ sync_stat: true }); }
 }
 

@@ -14,9 +14,7 @@ export const add_user = (user_data) => {
 
     // < must include user_data harsh values validation
 
-    const date = Date.now()
-
-    users[snd_id] = { sck, ls: date, rel_sync: date }
+    users[snd_id] = { sck, ls: Date.now(), rel_sync: null } // < rel_sync must get reduction, to make the first request
 
     return true;
 }
