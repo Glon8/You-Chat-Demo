@@ -1,5 +1,5 @@
 from ..values import rel
-from ..helpers import write_file, getDir, err_pop
+from ..helpers import write_file, getDir, err_pop, get_prefix
 
 
 def rrel():
@@ -12,7 +12,7 @@ def rrel():
     key = next(
         (
             name for name, data in rel.items()
-            if name == relay or data.get('link') == 'wss://' + relay
+            if name == relay or data.get('link') == get_prefix('ws') + relay
         ),
         None
     )

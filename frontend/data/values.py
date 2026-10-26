@@ -1,8 +1,10 @@
+secure = False
+
 _SUB_SEPERATOR = "-------------------<"
 
 _OPERATIONS = {
     "gnr": {
-        "ws_lnk": "wss://",
+        "ws_lnk": 'wss://' if secure else 'ws://',
         "snd_id": 0,
         "rcv_id": 0,
     },

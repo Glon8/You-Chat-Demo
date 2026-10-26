@@ -6,7 +6,7 @@ import time
 
 from pathlib import Path
 
-from .values import op, pnd, rel
+from .values import op, pnd, rel, secure
 
 
 def getDir():
@@ -118,3 +118,9 @@ def def_reports():
             item['reported'] = False
 
     file_update(getDir(), 'relays.json', rel)
+
+def get_prefix(type):
+    if type == 'ws':
+        return 'wss://' if secure else 'ws://'
+    elif type == 'http':
+        return 'https://' if secure else 'http://'
