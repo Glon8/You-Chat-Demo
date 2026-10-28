@@ -1,0 +1,1 @@
+export const msg_trans = (link, message) => { }

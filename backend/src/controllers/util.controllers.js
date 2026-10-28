@@ -1,7 +1,7 @@
 import { get_user, upd_rel_sync } from '../data/users.data.js'
 import { get_relays, add_relay } from '../data/relays.data.js';
 
-export const ping = (req, res) => {
+export const ping_mngr = (req, res) => {
     console.log('[Ping received]')
 
     const { snd_id } = req.body ?? {};
@@ -32,3 +32,5 @@ export const rel_upd = (req, res) => {
 
     res.sendStatus(204);
 }
+
+export const HaSh_mngr = (req, res) => { }
