@@ -1,4 +1,4 @@
-secure = False
+secure = True
 
 _SUB_SEPERATOR = "-------------------<"
 
