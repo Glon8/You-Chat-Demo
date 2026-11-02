@@ -1,9 +1,9 @@
-import { WebSocketServer } from "ws";
+import { WebSocketServer } from "ws"
 
-import { get_user } from "./src/data/users.data.js";
-import { connect } from "./src/handlers/connection.handler.js";
-import { disconnect } from "./src/handlers/disconnection.handler.js";
-import { transfer } from "./src/handlers/transition.handler.js";
+import { get_user } from "./src/data/users.data.js"
+import { connect } from "./src/handlers/connection.handler.js"
+import { disconnect } from "./src/handlers/disconnection.handler.js"
+import { transfer } from "./src/handlers/transition.handler.js"
 
 export let wss = null;
 

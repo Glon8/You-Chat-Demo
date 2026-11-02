@@ -1,1 +1,0 @@
-export const HaSh_req = (link) => { }

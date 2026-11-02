@@ -34,3 +34,5 @@ export const rel_upd = (req, res) => {
 }
 
 export const HaSh_mngr = (req, res) => { }
+
+export const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms));

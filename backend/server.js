@@ -1,8 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 
-import { wss_init } from './websockets-server.js';
-import utilRouter from './src/routers/util.router.js';
+import { wss_init } from './websockets-server.js'
+import utilRouter from './src/routers/util.router.js'
 
 const app = express();
 const port = process.env.PORT || 5000;
