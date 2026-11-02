@@ -9,27 +9,47 @@ import { sleep } from "../controllers/util.controllers.js"
         * First, ll check, whether the TTL is 0, and if its so, ll send the package to associated number. 
 */
 export const lookUp = async (req, res) => {
-    const { cnt_id, curTTL } = req.data;
+    const { cnt_id, curTTL, bList } = req?.data ?? {};
 
-    const TTL = 1 + curTTL[0];
-    const maxTTL = curTTL[1];
+    // <<<<<<<<<<<<<<<<<<<<<<< HARSH DATA VERIFICATION REQUIRED
+
+    const TTL = 1 + curTTL;
+    const maxTTL = 2;
     // Last phase
-    if (!!get_user(cnt_id)) { res.sendStatus(200); return; }
+    if (!!get_user(cnt_id)) return res.sendStatus(200);
     // Middle phase
-    if (TTL > maxTTL) { res.sendStatus(429); return; }
+    if (TTL > maxTTL) return res.sendStatus(429);
 
-    get_relays().forEach(async (link) => {
-        let ping_state = await ping(link);
+    const relays = get_relays().filter(link => !bList.includes(link));
 
-        if (!ping_state) { await sleep(5000); ping_state = await ping(link); }
+    for (const link of relays) {
+        if (await ping(link)) {
+            bList.push(link);
 
-        if (ping_state) {
+            await sleep(100);
+
             try {
-                response = await fetch(String(link) + '/api/lookup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: { cnt_id, curTTL: [TTL, maxTTL] } });
+                const response = await fetch(String(link) + '/api/lookup',
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ cnt_id, curTTL: TTL, bList })
+                    });
 
-                if (response.ok) { res.json({ TTL, link }); return; }
+                if (response.ok) {
+                    const body = await response.json();
+
+                    if (Object.keys(body).length == 0) { return res.status(200).json({ TTL, link }); }
+                    else {
+                        // <<<<<<<<<<<<<<<<<<<<<<< HARSH DATA VERIFICATION REQUIRED
+
+                        return res.status(200).json(body);
+                    }
+                }
             }
-            catch (error) { res.sendStatus(500); console.log(`[Look Up] 500\r\n${error}`); }
+            catch (error) { console.log(`[=== Look Up ===]\r\n[Link] ${link}\r\n[Status] 500\r\n${error}`); }
         }
-    });
+    };
+
+    return res.sendStatus(404);
 }

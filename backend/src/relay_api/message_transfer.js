@@ -1,1 +1,1 @@
-export const msg_trans = (link, message) => { }
+export const msg_trans = (link, msg_package) => { }
