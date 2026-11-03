@@ -1,10 +1,11 @@
-import { get_user, upd_ls } from "../data/users.data.js";
-import { ping_check } from "./heartbeat.handler.js";
+import { get_user, upd_ls } from "../data/users.data.js"
+import { ping_check } from "./heartbeat.handler.js"
 
-export const transfer = async (req_type, data) => {
-    if (req_type != 'msg' && req_type != 'upd') return false;
+export const transfer = async (data) => {
+    const { snd_id, rcv_id, req_type } = JSON.parse(data.toString());
 
-    const { snd_id, rcv_id, trn_dt, tm_stm } = JSON.parse(data.toString());
+    // check if request is valid
+    if (!['msg', 'upd'].includes(req_type)) return false;
 
     const rcv = get_user(rcv_id);
 
@@ -28,7 +29,7 @@ export const transfer = async (req_type, data) => {
         else { console.log(`[${rcv_id}]>[No Pong]`); return true; }
     }
     // transfer data routed to reciever
-    rcv.sck.send(JSON.stringify({ snd_id, rcv_id, req_type, trn_dt, tm_stm }));
+    rcv.sck.send(data);
 
     return true;
 }

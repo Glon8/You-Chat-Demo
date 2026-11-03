@@ -1,5 +1,5 @@
 import { get_user, upd_rel_sync } from '../data/users.data.js'
-import { get_relays, add_relay } from '../data/relays.data.js';
+import { get_relays, add_relay } from '../data/relays.data.js'
 
 export const ping_mngr = (req, res) => {
     console.log('[Ping received]')
@@ -19,7 +19,7 @@ export const ping_mngr = (req, res) => {
 export const rel_upd = (req, res) => {
     console.log('[Relay Update received]');
 
-    const { snd_id, data } = req.body ?? {};
+    const { snd_id, data } = req?.body ?? {};
 
     const relays = get_relays();
 
@@ -36,3 +36,10 @@ export const rel_upd = (req, res) => {
 export const HaSh_mngr = (req, res) => { }
 
 export const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+export const msg_rcv = async (req, res) => {
+    // data_package full package, not only the encrypted message
+    const { data_package } = req?.body ?? {};
+
+
+}

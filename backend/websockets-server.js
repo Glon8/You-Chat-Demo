@@ -17,24 +17,20 @@ export const wss_init = (server) => {
 
             console.log(`[${snd_id}]>[Request: ${req_type}]`);
 
-            // < verify data fields, eg strict verification
+            // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
 
-            const req_types = ['cnn', 'dsc', 'msg', 'upd'];
             // check if request is valid
-            if (!req_types.includes(req_type)) return;
+            if (!['cnn', 'dsc', 'msg', 'upd'].includes(req_type)) return;
+            // get user by id
             const snd = get_user(snd_id);
-            // known/unknown user sends connection request
+            // known/unknown user sends a connection request
             if (await connect(req_type, snd_id, socket)) return;
-
             // check that user have been registered
-            if (!snd) {
-                console.log(`[${snd_id}]>[Warning! User not registrated!]`);
-                return;
-            }
-            // known/unknown user sends disconnection request
+            if (!snd) { console.log(`[${snd_id}]>[Warning! User not registrated!]`); return; }
+            // user sends a disconnection request
             if (await disconnect(req_type, snd_id, socket)) return;
-
-            if (await transfer(req_type, data)) return;
+            // user sends a transfer package
+            if (await transfer(data)) return;
         });
     });
 

@@ -1,7 +1,8 @@
-import { rmv_user, get_user } from "../data/users.data.js";
+import { rmv_user, get_user } from "../data/users.data.js"
 
 export const disconnect = async (req_type, snd_id, socket) => {
-    if (req_type != 'dsc') return false;
+    // check if request is valid
+    if (!['dsc'].includes(req_type)) return false;
 
     console.log(`[${snd_id}]>[Request for disconnect]`);
 

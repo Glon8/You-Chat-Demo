@@ -11,7 +11,7 @@ import { sleep } from "../controllers/util.controllers.js"
 export const lookUp = async (req, res) => {
     const { cnt_id, curTTL, bList } = req?.data ?? {};
 
-    // <<<<<<<<<<<<<<<<<<<<<<< HARSH DATA VERIFICATION REQUIRED
+    // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
 
     const TTL = 1 + curTTL;
     const maxTTL = 2;
@@ -41,7 +41,7 @@ export const lookUp = async (req, res) => {
 
                     if (Object.keys(body).length == 0) { return res.status(200).json({ TTL, link }); }
                     else {
-                        // <<<<<<<<<<<<<<<<<<<<<<< HARSH DATA VERIFICATION REQUIRED
+                        // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
 
                         return res.status(200).json(body);
                     }

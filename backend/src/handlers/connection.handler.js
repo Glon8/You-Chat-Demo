@@ -1,8 +1,9 @@
-import { add_user, get_user, upd_ls } from "../data/users.data.js";
-import { ping_check } from "./heartbeat.handler.js";
+import { add_user, get_user, upd_ls } from "../data/users.data.js"
+import { ping_check } from "./heartbeat.handler.js"
 
 export const connect = async (req_type, snd_id, socket) => {
-    if (req_type != 'cnn') return false;
+    // check if request is valid
+    if (!['cnn'].includes(req_type)) return false;
 
     console.log(`[${snd_id}]>[Request for registration]`);
 
