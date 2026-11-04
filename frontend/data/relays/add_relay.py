@@ -1,11 +1,11 @@
 import time
 
 from ..values import rel
-from ..helpers import file_update, getDir, get_prefix
+from ..helpers import file_update, getDir
 
 
 def arel():
-    rel_link = get_prefix('ws') + input('relay link > ')
+    rel_link = input('relay link > ')
     name = input('relay name > ')
 
     rel[name] = {

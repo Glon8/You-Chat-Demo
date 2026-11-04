@@ -1,18 +1,18 @@
-secure = True
-
 _SUB_SEPERATOR = "-------------------<"
 
 _OPERATIONS = {
     "gnr": {
-        "ws_lnk": 'wss://' if secure else 'ws://',
+        "ws_lnk": 'No link for relay',
         "snd_id": 0,
         "rcv_id": 0,
+        "sprt": False
     },
     "slc_op": [
         _SUB_SEPERATOR + ' Connection',
         "* cnn     - connect to saved relay",
         "* dsc     - disconnect entirely from a relay",
         "* rec     - attempt reconnect to previously connected relay",
+        "* sprt    - protocol security switch (http/https)",
         _SUB_SEPERATOR + ' Contacts',
         "* vcnt    - view saved contacts",
         "* acnt    - add contact",

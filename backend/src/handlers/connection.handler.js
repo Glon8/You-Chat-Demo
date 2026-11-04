@@ -13,7 +13,7 @@ export const connect = async (req_type, snd_id, socket) => {
     let sck_mismatch = false;
 
     if (snd && Date.now() > 5 * 1000 + snd.ls) {
-        ping_state = await ping_check(snd.sck, 5);
+        ping_state = await ping_check(snd.sck, 1);
 
         if (ping_state) upd_ls(snd_id);
     }

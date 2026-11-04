@@ -7,6 +7,7 @@ from data.connection.link_update import lnk_upd
 from data.connection.connect import cnn
 from data.connection.disconnect import dsc
 from data.connection.reconnect import rec
+from data.connection.secure_protocol import sprt
 # CORE_THREADS
 from data.core_threads.messages_manager import manage
 # CONTACTS
@@ -27,7 +28,7 @@ def control_panel():
     while True:
         render()
 
-        npt = input("> ")
+        npt = input("> ").strip()
         # ========================< GENERAL
         if npt == "cnn":
             lnk_upd()
@@ -35,6 +36,8 @@ def control_panel():
             dsc()
         if npt == "rec":
             rec()
+        if npt == "sprt":
+            sprt()
         # ========================< CONTACTS
         if npt == "vcnt":
             vcnt()

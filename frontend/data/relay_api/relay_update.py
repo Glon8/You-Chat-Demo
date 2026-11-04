@@ -7,7 +7,7 @@ from ..helpers import err_pop, get_prefix, file_update, getDir
 def rel_upd():
     ws_lnk = op.get('gnr').get("ws_lnk")
 
-    http_address = ws_lnk.replace(get_prefix('ws'), get_prefix('http'), 1)
+    http_address = get_prefix('http') + ws_lnk
 
     cnt_id = op.get('gnr').get('snd_id')
 

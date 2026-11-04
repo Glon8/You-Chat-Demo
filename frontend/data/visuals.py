@@ -11,7 +11,11 @@ def render():
             print(f'{spr} GENERAL')
 
             for name, value in item.items():
-                if name == 'rcv_id':
+                if name == 'ws_lnk':
+                    print(f'[Relay] {value}')
+                elif name == 'snd_id':
+                    print(f'[My id] {value}')
+                elif name == 'rcv_id':
                     cnt_info = cnt.get(value)
                     rcv_name = None
 
@@ -19,9 +23,11 @@ def render():
                         rcv_name = cnt_info.get('name')
 
                     if rcv_name:
-                        print(f'[rcv_id] {rcv_name} > {value}')
+                        print(f'[Contact] {rcv_name} > {value}')
                     else:
                         print(f'[{name}] {value}')
+                elif name == 'sprt':
+                    print(f'[Secure Protocol] {value}')
                 else:
                     print(f'[{name}] {value}')
         if key == 'slc_op':

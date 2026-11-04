@@ -7,6 +7,7 @@ from ..values import op, set_WS, set_ERR, get_ERR, cnt, get_WS
 from ..core_threads.link_listener import listen
 from .update import update
 from ..relay_api.ping import relay_ping
+from ..helpers import get_prefix
 
 _KILL = False
 ping = True
@@ -23,6 +24,7 @@ def cnn():
 
     # pinging to relay
     ping = relay_ping()
+
     # check if relay is offline
     if not ping:
         threading.Thread(
@@ -38,7 +40,7 @@ def cnn():
         time.sleep(10)  # < temporary solution, for async await issue (useEffect on js)
 
     try:
-        ws = websocket.create_connection(gnr["ws_lnk"])
+        ws = websocket.create_connection(get_prefix('ws') + gnr["ws_lnk"])
 
         set_WS(ws)
 
@@ -55,7 +57,14 @@ def cnn():
         # cleaning error message
         set_ERR('')
         # wait for registration to take place
-        time.sleep(0.3)
+        # <================================== ISSUE TO GET SOLVED
+        # Should wait longer because lack of knowledge when the relay may ask for list sharing, that adds to pending -
+        # time, original waiting time - 0.3 sec.
+        # Solutions:
+        # * Add a timer as on the relay.
+        # * Check when the relay makes registration.
+        # * Make a relay drop a response back by http.
+        time.sleep(2)
         # send update call to every contact in a list
         for key, cnt_info in cnt.items():
             update(key, None)
