@@ -130,6 +130,8 @@ The simplest way to get started is:
 
 > **Note:** If the connection to the relay is lost, you currently need to reconnect manually using `rec`.
 
+Make sure **`Secure Protocol`** is `True` if you connect to online relay. Online relay require **secured** connection(e.g. `https`, `wss`).
+
 While using `vmsg`, the client is currently unable to send messages. This limitation may be removed in a future.
 
 ### Relay Link Format
@@ -149,6 +151,10 @@ http://11.12.13.14:0000      ❌ Wrong
 ```
 
 The link should contain only the **host/namespace and, when required, the port**.
+
+### Known error:
+
+Upon reconnect, may not pass pinging. To fix, **disconnect(`dsc`) and reopen chat window**
 
 ## Testing Goals
 
