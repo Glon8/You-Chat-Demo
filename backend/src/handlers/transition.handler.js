@@ -2,6 +2,8 @@ import { get_user, upd_ls } from "../data/users.data.js"
 import { ping_check } from "./heartbeat.handler.js"
 
 export const transfer = async (data) => {
+    // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
+
     const { snd_id, rcv_id, req_type } = JSON.parse(data.toString());
 
     // check if request is valid
