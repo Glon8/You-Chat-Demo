@@ -3,7 +3,12 @@ import { ping_check } from "./heartbeat.handler.js"
 import { get_relays } from "../data/relays.data.js";
 import { ping } from "../relay_api/ping.js";
 import { msg_trans } from "../relay_api/message_transfer.js";
-
+/*
+    3 phases:
+        * Last, must return boolean, if the cnt_id, is found in its client list. <=== LookUp func
+        * Middle, ll return pre last TTL (that received the boolean) and return, associated link. <=== LookUp func
+        * First, relay with TTL 0 ll send the package to associated link. <=== transfer func
+*/
 export const transfer = async (data) => {
     // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
 
@@ -51,7 +56,7 @@ export const transfer = async (data) => {
                     // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
 
                     // unpack
-                    const { TTL, link } = response.body;
+                    const { link } = response.body;
                     //transfer the message
                     msg_trans(link, data);
                     // inform
@@ -76,16 +81,16 @@ export const transfer = async (data) => {
         // check socket being alive
         ping_state = await ping_check(rcv.sck, 5);
 
-        if (ping_state) { 
+        if (ping_state) {
             // last seen update
-            upd_ls(rcv_id); 
+            upd_ls(rcv_id);
             // inform
-            console.log(`[${rcv_id}]>[Pong received]`); 
+            console.log(`[${rcv_id}]>[Pong received]`);
         }
         else {
             // inform
-            console.log(`[${rcv_id}]>[No Pong]`); 
-            return true; 
+            console.log(`[${rcv_id}]>[No Pong]`);
+            return true;
         }
     }
     // transfer data routed to reciever

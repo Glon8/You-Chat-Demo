@@ -6,7 +6,7 @@ import { sleep } from "../controllers/util.controllers.js"
     3 phases:
         * Last, must return boolean, if the cnt_id, is found in its client list. <=== LookUp func
         * Middle, ll return pre last TTL (that received the boolean) and return, associated link. <=== LookUp func
-        * First, ll check, whether the TTL is 0, and if its so, ll send the package to associated number. 
+        * First, relay with TTL 0 ll send the package to associated link. <=== transfer func
 */
 export const lookUp = async (req, res) => {
     const { cnt_id, curTTL, bList } = req?.data ?? {};
@@ -39,7 +39,7 @@ export const lookUp = async (req, res) => {
                 if (response.ok) {
                     const body = await response.json();
 
-                    if (Object.keys(body).length == 0) { return res.status(200).json({ TTL, link }); }
+                    if (Object.keys(body).length == 0) { return res.status(200).json({ link }); }
                     else {
                         // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
 
