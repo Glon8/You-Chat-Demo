@@ -1,4 +1,6 @@
 export const ping = async (link) => {
+    // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
+    
     console.log(`[Ping sent] ${String(link)}`);
 
     try {

@@ -18,7 +18,7 @@ export const lookUp = async (req, res) => {
     // Last phase
     if (!!get_user(cnt_id)) return res.sendStatus(200);
     // Middle phase
-    if (TTL > maxTTL) return res.sendStatus(429);
+    if (TTL >= maxTTL) return res.sendStatus(429);
 
     const relays = get_relays().filter(link => !bList.includes(link));
 
@@ -29,7 +29,7 @@ export const lookUp = async (req, res) => {
             await sleep(100);
 
             try {
-                const response = await fetch(String(link) + '/api/lookup',
+                const response = await fetch('https://' + String(link) + '/api/lookup',
                     {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
