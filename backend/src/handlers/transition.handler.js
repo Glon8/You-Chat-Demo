@@ -33,6 +33,8 @@ export const transfer = async (data) => {
         const relays = get_relays();
         // create a black list
         const bList = [];
+        // inform
+        if (!relays || relays.size === 0) console.log(`[No relays transfer to]`);
         // get through relay list
         for (const relay of relays) {
             // check if the relay is alive
