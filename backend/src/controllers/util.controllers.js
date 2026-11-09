@@ -44,13 +44,15 @@ export const sleep = async (ms) => new Promise(resolve => setTimeout(resolve, ms
 
 export const msg_rcv = async (req, res) => {
     // data_package full package, not only the encrypted message
-    const { data } = req?.body ?? {};
+    const data = req?.body ?? {};
+
+    const { snd_id, rcv_id } = data;
 
     // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
-    
-    console.log(`[Outer message transfer]\r\n[From] ${link}\r\n[To] ${rcv_id}`);
 
-    await transfer(data);
+    console.log(`[Outer message transfer] ${snd_id} > ${rcv_id}`);
+
+    await transfer(JSON.stringify(data));
 
     return res.sendStatus(200);
 }

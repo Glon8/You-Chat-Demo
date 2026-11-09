@@ -20,7 +20,7 @@ export const lookUp = async (req, res) => {
     // Middle phase
     if (TTL >= maxTTL) return res.sendStatus(429);
 
-    const relays = get_relays().filter(link => !bList.includes(link));
+    const relays = [...get_relays()].filter(link => !bList.includes(link));
 
     for (const link of relays) {
         if (await ping(link)) {

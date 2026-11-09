@@ -59,20 +59,21 @@ export const transfer = async (data) => {
                 if (response?.ok) {
                     // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
 
-                    const body = await response.json();
+                    const body = await response.text();
 
                     console.log(`[Lookup response] ${body}`);
 
-                    if (Object.keys(body).length > 0) {
-                        console.log('[Receiver relay] Third party');
-                        // unpack
-                        const { link } = body;
-                        //transfer the message
-                        await msg_trans(link, data);
+                    if (body == "OK") {
+                        console.log('[Receiver relay] Local');
+
+                        await msg_trans(relay, data);
                     }
                     else {
-                        console.log('[Receiver relay] Local');
-                        await msg_trans(relay, data);
+                        console.log('[Receiver relay] Third party');
+                        // unpack
+                        const { link } = JSON.parse(body);
+                        //transfer the message
+                        await msg_trans(link, data);
                     }
                     // inform
                     console.log(`[Status] Transfered`);
