@@ -4,7 +4,7 @@ import json
 import time
 
 from ..values import op, set_WS, set_ERR, get_ERR, cnt, get_WS
-from ..core_threads.link_listener import listen
+from ..core_threads.link_listener import listen, dont_listen
 from .update import update
 from ..relay_api.ping import relay_ping
 from ..helpers import get_prefix
@@ -37,6 +37,7 @@ def cnn():
 
     if ws:
         ws.close()
+        dont_listen()
         time.sleep(10)  # < temporary solution, for async await issue (useEffect on js)
 
     try:
@@ -86,12 +87,13 @@ def wait_ping():
     ping = relay_ping()
     # HEART BEAT check
     # pinging until positive reply
-    while not ping:
+    while not ping and not _KILL:
         time.sleep(60)
-        if _KILL:
-            _KILL = False
-            return
         ping = relay_ping()
+
+    if _KILL:
+        _KILL = False
+        return
 
     set_ERR("")
 

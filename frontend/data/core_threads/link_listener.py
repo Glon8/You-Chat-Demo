@@ -6,20 +6,19 @@ from ..values import get_WS, cnt, get_ERR, set_ERR
 from ..helpers import add_pending, err_pop, file_update, getDir
 from ..connection.update import update
 
-_KILL = False
+_KILL = threading.Event()
+
+_OPEN_THREAD = None
 
 
 def lnk_lst():
     global _KILL
 
-    while True:
-        try:
-            if _KILL:
-                _KILL = False
-                break
+    while not _KILL.is_set():  # initially was just True
+        if not get_WS():
+            return
 
-            if not get_WS():
-                return
+        try:
             # listen for incoming package
             package = get_WS().recv()
             # parse the package from JSON
@@ -57,14 +56,19 @@ def lnk_lst():
 
 
 def listen():
-    if get_WS():
-        threading.Thread(
-            target=lnk_lst,
-            daemon=True
-        ).start()
+    global _KILL
+    global _OPEN_THREAD
+
+    if get_WS() and (not _OPEN_THREAD or not _OPEN_THREAD.is_alive()):
+        _KILL.clear()
+
+        _OPEN_THREAD = threading.Thread(target=lnk_lst, daemon=True)
+
+        _OPEN_THREAD.start()
 
 
 def dont_listen():
     global _KILL
 
-    _KILL = True
+    if not get_WS() and _OPEN_THREAD and _OPEN_THREAD.is_alive():
+        _KILL.set()

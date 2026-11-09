@@ -5,7 +5,7 @@ _OPERATIONS = {
         "ws_lnk": 'No link for relay',
         "snd_id": 0,
         "rcv_id": 0,
-        "sprt": True
+        "sprt": False
     },
     "slc_op": [
         _SUB_SEPERATOR + ' Connection',
