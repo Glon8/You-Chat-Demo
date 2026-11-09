@@ -51,18 +51,31 @@ export const transfer = async (data) => {
                 const response = await fetch('https://' + String(relay) + '/api/lookup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ rcv_id, curTTL: 0, bList })
+                    body: JSON.stringify({ cnt_id: rcv_id, curTTL: 0, bList })
                 });
 
-                if (response) {
+                console.log(`[Lookup status] ${response?.status}`);
+
+                if (response?.ok) {
                     // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
 
-                    // unpack
-                    const { link } = response.body;
-                    //transfer the message
-                    msg_trans(link, data);
+                    const body = await response.json();
+
+                    console.log(`[Lookup response] ${body}`);
+
+                    if (Object.keys(body).length > 0) {
+                        console.log('[Receiver relay] Third party');
+                        // unpack
+                        const { link } = body;
+                        //transfer the message
+                        await msg_trans(link, data);
+                    }
+                    else {
+                        console.log('[Receiver relay] Local');
+                        await msg_trans(relay, data);
+                    }
                     // inform
-                    console.log(console.log(`[Status] Transfered`));
+                    console.log(`[Status] Transfered`);
                     // break the lookup
                     break;
                 }

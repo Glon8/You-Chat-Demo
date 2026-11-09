@@ -9,7 +9,7 @@ import { sleep } from "../controllers/util.controllers.js"
         * First, relay with TTL 0 ll send the package to associated link. <=== transfer func
 */
 export const lookUp = async (req, res) => {
-    const { cnt_id, curTTL, bList } = req?.data ?? {};
+    const { cnt_id, curTTL, bList } = req?.body ?? {};
 
     // <<<<<<<<<<<<<<<<<<<<<<< STRICT DATA VERIFICATION REQUIRED
 
