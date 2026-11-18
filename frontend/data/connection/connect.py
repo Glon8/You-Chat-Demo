@@ -7,7 +7,7 @@ from ..values import op, set_WS, set_ERR, get_ERR, cnt, get_WS
 from ..core_threads.link_listener import listen, dont_listen
 from .update import update
 from ..relay_api.ping import relay_ping
-from ..helpers import get_prefix
+from ..helpers import get_prefix, err_pop
 
 _KILL = False
 ping = True
@@ -72,6 +72,8 @@ def cnn():
     except Exception as e:
         if not get_ERR():
             set_ERR(f"[Current WebSocket not accessible]")
+
+        err_pop(e)
 
 
 def wait_ping():

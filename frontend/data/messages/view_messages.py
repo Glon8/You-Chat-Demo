@@ -60,29 +60,29 @@ def msg_lst(cnt_id, cnt_name):
         chat = msg.get(cnt_id)
 
         if msg_cnt <= (len(chat) - 1):
-            user = op['gnr']['snd_id']
+            user = (op.get('gnr') or {}).get('snd_id')
 
             message = chat[msg_cnt]
-            sender = message['snd_id']
+            sender = str(message.get('snd_id'))
             t = -1
 
             if sender == user:
                 name = 'Me'
-                t = message['tm_stm']
+                t = (message.get('trn_dt') or {}).get('tm_stm')
             elif sender == cnt_id:
                 name = cnt_name
             else:
                 name = cnt_id
 
             if sender != user:
-                t = message['rcv_tm_stm']
+                t = message.get('rcv_tm_stm')
 
             dt = datetime.fromtimestamp(t)
 
             print(
                 f"[{name}]"
                 f"[{dt.day:02d}.{dt.month:02d}.{dt.year:02d} - {dt.hour:02d}:{dt.minute:02d}:{dt.second:02d}]:"
-                f"{message['msg']}\r\n"
+                f"{(message.get('trn_dt') or {}).get('data')}\r\n"
             )
 
             msg_cnt += 1

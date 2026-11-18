@@ -98,9 +98,15 @@ def file_update(file_path, file_name, data):
     write_file(file_path, file_name, saved_data)
 
 
-def add_pending(snd_id, rcv_id, timestamp, message):
+old = """
+def add_pending(snd_id, rcv_id, timestamp, dt):
     rcv_tm = time.time()
-    pnd.append({'snd_id': snd_id, 'rcv_id': rcv_id, 'tm_stm': timestamp, 'rcv_tm_stm': rcv_tm, 'msg': message})
+    pnd.append({'snd_id': snd_id, 'rcv_id': rcv_id, 'tm_stm': timestamp, 'rcv_tm_stm': rcv_tm, 'data': dt})
+    """
+
+def add_pending(snd_id, rcv_id, dt):
+    rcv_tm = time.time()
+    pnd.append({'snd_id': snd_id, 'rcv_id': rcv_id, 'rcv_tm_stm': rcv_tm, 'trn_dt': dt})
 
 
 def err_pop(message):

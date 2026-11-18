@@ -16,10 +16,10 @@ def snd():
         err_pop("Unknown number check your contacts")
         return
 
-    now_time = time.time()
-    MSG = input("message > ")
+    dt = input("message > ")
 
     try:
+        old = """
         get_WS().send(
             json.dumps(
                 {
@@ -31,7 +31,25 @@ def snd():
                 }
             )
         )
+        """
+        transfer_data = {
+            "tm_stm": time.time(),
+            "data": dt
+        }
+
+        get_WS().send(
+            json.dumps(
+                {
+                    "snd_id": gnr["snd_id"],
+                    "rcv_id": gnr["rcv_id"],
+                    "req_type": "msg",
+                    "trn_dt": transfer_data
+                }
+            )
+        )
     except Exception as e:
+        # inform
         err_pop("Message has been STORED and NOT SENT")
 
-    add_pending(gnr["snd_id"], gnr["rcv_id"], now_time, MSG)
+    old = """add_pending(gnr["snd_id"], gnr["rcv_id"], now_time, dt)"""
+    add_pending(gnr["snd_id"], gnr["rcv_id"], transfer_data)

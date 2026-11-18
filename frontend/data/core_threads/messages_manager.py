@@ -5,24 +5,36 @@ from ..helpers import file_update, getDir
 
 _KILL = False
 
+"""
+{
+    "snd_id": 5555,
+    "rcv_id": 7901,
+    "tm_stm": -1,
+    "rcv_tm_stm": 1794237764.2439077,
+    "msg": "Hello2"
+}
+"""
+
 
 def msg_mng():
+    # get a global value
     global _KILL
 
     while True:
+        # if _KILL is true > set _KILL to false
         if _KILL:
             _KILL = False
             break
-
+        # values init
         cluster = 100
         rcv_lst = []
         # pending to active messages
         while cluster > 0 and pnd:
             package = pnd.pop(0)
             # unpack
-            user_id = op['gnr']['snd_id']
-            snd_id = package.get('snd_id')
-            rcv_id = package.get('rcv_id')
+            user_id = (op.get('gnr') or {}).get('snd_id')
+            snd_id = str(package.get('snd_id'))
+            rcv_id = str(package.get('rcv_id'))
             # find chat id
             chat_id = snd_id if snd_id != user_id else rcv_id
             # pass unknown number to .trash
@@ -35,10 +47,10 @@ def msg_mng():
                 msg_instance(chat_id)
             # check for a duplicate message by timestamp and value
             if not any(
-                    data.get('snd_id') == package.get('snd_id')
-                    and data.get('tm_stm') == package.get('tm_stm')
-                    and data.get('msg') == package.get('msg')
-                    for data in msg[chat_id]
+                    MSG.get('snd_id') == snd_id
+                    and (MSG.get('trn_dt') or {}).get('tm_stm') == (package.get('trn_dt') or {}).get('tm_stm')
+                    and (MSG.get('trn_dt') or {}).get('data') == (package.get('trn_dt') or {}).get('data')
+                    for MSG in msg[chat_id]
             ):
                 # pass the package to the chat
                 msg[chat_id].append(package)
