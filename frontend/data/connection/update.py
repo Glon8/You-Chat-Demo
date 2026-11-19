@@ -2,7 +2,9 @@ import time
 import json
 
 from ..values import cnt, msg, get_WS, op
-from ..helpers import err_pop
+
+from ..helpers.err_pop import err_pop
+from ..helpers.request_sender import request_sender
 
 
 def update(cnt_id, tm_stm):
@@ -21,8 +23,9 @@ def update(cnt_id, tm_stm):
         if isinstance(chat, list) and chat:
             for message in chat:
                 msg_tm_stm = (message.get('trn_dt') or {}).get('tm_stm')
-
+                print(f'[Queued message] {message}')
                 if isinstance(msg_tm_stm, (int, float)) and msg_tm_stm > tm_stm:
+                    print(f'[Passed message] {message}')
                     package.append(message)
     # if there is no timestamp
     else:
@@ -30,26 +33,37 @@ def update(cnt_id, tm_stm):
             chat = []"""
         # set 'last seen' timestamp
         ls_tm_stm = (
-                max((m.get('tm_stm') for m in chat if m.get('snd_id') == cnt_id), default=None) or
+                max(((m.get('trn_dt') or {}).get('tm_stm') for m in chat if m.get('snd_id') == cnt_id), default=None) or
                 cnt.get(cnt_id).get('last_seen')
         )
         # if chat is a list and not empty
         old = """if chat:"""
         if isinstance(chat, list) and chat:
             for message in chat:
+                print(f'[Queued message] {message}')
                 msg_tm_stm = (message.get('trn_dt') or {}).get('tm_stm')
                 if (
                         isinstance(msg_tm_stm, (int, float)) and
                         msg_tm_stm > ls_tm_stm and
                         message.get('snd_id') == op.get('gnr').get('snd_id')
                 ):
+                    print(f'[Passed message] {message}')
                     package.append(message)
     # pack the data
     old = """MSG = {'tm_stm': tm_stm, 'msg_snc': package}"""
     dt = {'ls_tm_stm': ls_tm_stm, 'dt_snc': package}
+    transfer_data = { "tm_stm": time.time(), "data": dt }
     # try to send through websocket
+    _SENT = request_sender("upd", transfer_data)
+
+    if not _SENT:
+        # inform
+        err_pop('Error: Failed to send the update!')
+
+
+"""
     try:
-        old = """
+        old = '''
         get_WS().send(
             json.dumps(
                 {
@@ -61,7 +75,7 @@ def update(cnt_id, tm_stm):
                 }
             )
         )
-        """
+        '''
         get_WS().send(
             json.dumps(
                 {
@@ -77,3 +91,4 @@ def update(cnt_id, tm_stm):
         )
     except Exception as e:
         err_pop('Error: Failed to send the update!')
+"""

@@ -1,17 +1,30 @@
 import threading
 
 from ..values import op, pnd, msg, msg_instance
-from ..helpers import file_update, getDir
+
+from ..helpers.file_update import file_update
+from ..helpers.get_dir import get_dir
 
 _KILL = False
 
 """
+OLD
 {
-    "snd_id": 5555,
-    "rcv_id": 7901,
-    "tm_stm": -1,
-    "rcv_tm_stm": 1794237764.2439077,
-    "msg": "Hello2"
+    "snd_id",      - sender number
+    "rcv_id",      - receiver number
+    "tm_stm",      - message creation timestamp
+    "rcv_tm_stm",  - receive timestamp     <- created locally upon receive
+    "msg"          - message content       <- ENCRYPTED
+}
+NEW
+{
+    "snd_id",      - sender number
+    "rcv_id",      - receiver number
+    "rcv_tm_stm",  - receive timestamp     <- created locally upon receive
+    "trn_dt": {    - transferred data      <- ENCRYPTED
+        "tm_stm",  - message creation timestamp
+        "data"     - message content
+    }
 }
 """
 
@@ -65,7 +78,7 @@ def msg_mng():
         rcv_lst.clear()
         # update local file
         if cluster < 100:
-            file_update(getDir(), 'chats.json', msg)
+            file_update(get_dir(), 'chats.json', msg)
 
 
 def manage():

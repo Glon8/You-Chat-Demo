@@ -1,5 +1,8 @@
 from ..values import rel
-from ..helpers import write_file, getDir, err_pop
+
+from ..helpers.write_file import write_file
+from ..helpers.get_dir import get_dir
+from ..helpers.err_pop import err_pop
 
 
 def rrel():
@@ -23,6 +26,6 @@ def rrel():
 
     rel.pop(key)
 
-    write_file(getDir(), 'relays.json', rel)
+    write_file(get_dir(), 'relays.json', rel)
 
     err_pop("Relay has been successfully removed")

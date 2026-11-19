@@ -1,8 +1,9 @@
 import requests
 
 from ..values import op
-from ..helpers import get_prefix
 from .relay_update import rel_upd
+
+from ..helpers.get_prefix import get_prefix
 
 
 def relay_ping():

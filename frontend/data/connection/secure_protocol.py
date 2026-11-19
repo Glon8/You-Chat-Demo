@@ -1,5 +1,7 @@
 from ..values import op
-from ..helpers import file_update, getDir
+
+from ..helpers.file_update import file_update
+from ..helpers.get_dir import get_dir
 
 
 def sprt():
@@ -7,4 +9,4 @@ def sprt():
 
     gnr['sprt'] = not gnr.get('sprt', False)
 
-    file_update(getDir(), 'config.json', gnr)
+    file_update(get_dir(), 'config.json', gnr)

@@ -7,7 +7,10 @@ from ..values import op, set_WS, set_ERR, get_ERR, cnt, get_WS
 from ..core_threads.link_listener import listen, dont_listen
 from .update import update
 from ..relay_api.ping import relay_ping
-from ..helpers import get_prefix, err_pop
+
+from ..helpers.get_prefix import get_prefix
+from ..helpers.err_pop import err_pop
+from ..helpers.request_sender import request_sender
 
 _KILL = False
 ping = True
@@ -42,6 +45,38 @@ def cnn():
 
     try:
         ws = websocket.create_connection(get_prefix('ws') + gnr["ws_lnk"])
+    except Exception as e:
+        if not get_ERR():
+            set_ERR(f"[Current WebSocket not accessible]")
+
+        err_pop(e)
+
+    set_WS(ws)
+
+    _SEND = request_sender("cnn", {})
+
+    if not _SEND:
+        if not get_ERR():
+            set_ERR(f"[Current WebSocket not accessible]")
+    # starting to listen to the relay
+    listen()
+    # cleaning error message
+    set_ERR('')
+    # wait for registration to take place
+    # <================================== ISSUE TO GET SOLVED
+    # Should wait longer because lack of knowledge when the relay may ask for list sharing, that adds to pending -
+    # time, original waiting time - 0.3 sec.
+    # Solutions:
+    # * Add a timer as on the relay.
+    # * Check when the relay makes registration.
+    # * Make a relay drop a response back by http.
+    time.sleep(2)
+    # send update call to every contact in a list
+    for key, cnt_info in cnt.items():
+        update(key, None)
+"""
+    try:
+        ws = websocket.create_connection(get_prefix('ws') + gnr["ws_lnk"])
 
         set_WS(ws)
 
@@ -74,7 +109,7 @@ def cnn():
             set_ERR(f"[Current WebSocket not accessible]")
 
         err_pop(e)
-
+"""
 
 def wait_ping():
     global _KILL

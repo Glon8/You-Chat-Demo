@@ -1,5 +1,3 @@
-import time
-
 from ..values import cnt, spr
 from datetime import datetime
 

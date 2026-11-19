@@ -1,7 +1,9 @@
 import time
 
 from ..values import rel
-from ..helpers import file_update, getDir
+
+from ..helpers.file_update import file_update
+from ..helpers.get_dir import get_dir
 
 
 def arel():
@@ -14,4 +16,4 @@ def arel():
         'reported': False
     }
 
-    file_update(getDir(), 'relays.json', rel)
+    file_update(get_dir(), 'relays.json', rel)

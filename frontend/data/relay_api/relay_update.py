@@ -1,7 +1,11 @@
 import requests
 
 from ..values import op, rel
-from ..helpers import err_pop, get_prefix, file_update, getDir
+
+from ..helpers.err_pop import err_pop
+from ..helpers.get_prefix import get_prefix
+from ..helpers.file_update import file_update
+from ..helpers.get_dir import get_dir
 
 
 def rel_upd():
@@ -20,7 +24,7 @@ def rel_upd():
         if not item['reported']:
             item['reported'] = True
 
-    file_update(getDir(), 'relays.json', rel)
+    file_update(get_dir(), 'relays.json', rel)
 
     try:
         requests.post(http_address + '/api/rel-upd', json=dt)

@@ -1,7 +1,11 @@
 from ..values import op, rel
 from .connect import cnn, stop_waiting
 from .disconnect import dsc
-from ..helpers import file_update, getDir, err_pop, def_reports
+
+from ..helpers.file_update import file_update
+from ..helpers.get_dir import get_dir
+from ..helpers.err_pop import err_pop
+from ..helpers.def_reports import def_reports
 
 
 def lnk_upd():
@@ -21,7 +25,7 @@ def lnk_upd():
         err_pop("This relay not in a list")
         return
 
-    file_update(getDir(), 'config.json', gnr)
+    file_update(get_dir(), 'config.json', gnr)
 
     stop_waiting()
 

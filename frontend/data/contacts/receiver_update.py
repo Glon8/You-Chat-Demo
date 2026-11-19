@@ -1,5 +1,8 @@
 from ..values import op, cnt
-from ..helpers import file_update, getDir, err_pop
+
+from ..helpers.file_update import file_update
+from ..helpers.get_dir import get_dir
+from ..helpers.err_pop import err_pop
 
 
 def upd_rcv():
@@ -18,4 +21,4 @@ def upd_rcv():
 
     gnr["rcv_id"] = rcv
 
-    file_update(getDir(), 'config.json', gnr)
+    file_update(get_dir(), 'config.json', gnr)

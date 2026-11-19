@@ -4,7 +4,8 @@ import time
 from datetime import datetime
 
 from ..values import msg, cnt, spr, op
-from ..helpers import err_pop
+
+from ..helpers.err_pop import err_pop
 
 _KILL = False
 

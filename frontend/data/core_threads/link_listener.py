@@ -3,8 +3,12 @@ import threading
 import time
 
 from ..values import get_WS, cnt, get_ERR, set_ERR
-from ..helpers import add_pending, err_pop, file_update, getDir
 from ..connection.update import update
+
+from ..helpers.add_pending import add_pending
+from ..helpers.err_pop import err_pop
+from ..helpers.file_update import file_update
+from ..helpers.get_dir import get_dir
 
 _KILL = threading.Event()
 
@@ -27,7 +31,6 @@ def lnk_lst():
             unload = json.loads(package)
             # create shorthand
             ul = unload
-            print(ul)
             # get package sender
             snd = ul.get("snd_id")
             # check is it a message call
@@ -38,15 +41,14 @@ def lnk_lst():
             # check is it an update call
             elif ul['req_type'] == 'upd':
                 # extract data
-                dt = ul['trn_dt']
-                # extract 'last seen' timestamp
-                old = """tm_stm = dt.get('tm_stm')"""
-                ls_tm_stm = (dt.get('data') or {}).get('ls_tm_stm')
-                # if there is a 'last seen' timestamp, send update in return
-                if ls_tm_stm:
-                    update(ul.get("snd_id"), ls_tm_stm)
+                dt = ul.get('trn_dt')
+                # extract timestamp
+                tm_stm = dt.get('tm_stm')
+                # if there is a timestamp, send update in return
+                if tm_stm:
+                    update(ul.get("snd_id"), tm_stm)
                 # extract sync_data
-                sync_data = dt.get('dt_snc')
+                sync_data = (dt.get('data') or {}).get('dt_snc')
                 # if sync_data IS a list and ISNT empty > pass all the received messages to pending
                 if isinstance(sync_data, list) and sync_data:
                     for msg in sync_data:
@@ -56,7 +58,7 @@ def lnk_lst():
             if snd in cnt:
                 cnt[snd]['last_seen'] = time.time()
                 # overwrite contacts - save
-                file_update(getDir(), 'contacts.json', cnt)
+                file_update(get_dir(), 'contacts.json', cnt)
         except Exception as e:
             # inform
             if not get_ERR():

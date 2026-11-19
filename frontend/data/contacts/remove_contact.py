@@ -1,5 +1,8 @@
 from ..values import cnt, msg
-from ..helpers import write_file, getDir, err_pop
+
+from ..helpers.write_file import write_file
+from ..helpers.get_dir import get_dir
+from ..helpers.err_pop import err_pop
 
 
 def rcnt():
@@ -19,10 +22,10 @@ def rcnt():
         cnt_id = next(key for key, value in cnt.items() if value.get('name') == contact)
 
     cnt.pop(cnt_id)
-    write_file(getDir(), 'contacts.json', cnt)
+    write_file(get_dir(), 'contacts.json', cnt)
 
     if msg.get(cnt_id):
         msg.pop(cnt_id)
-        write_file(getDir(), 'chats.json', msg)
+        write_file(get_dir(), 'chats.json', msg)
 
     err_pop("Contact has been successfully removed")

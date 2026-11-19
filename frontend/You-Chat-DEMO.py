@@ -1,6 +1,10 @@
 # GENERAL
+#    VISUALS
 from data.visuals import render
-from data.helpers import config_load, def_component_loader
+#    HELPERS
+from data.helpers.config_load import config_load
+from data.helpers.def_component_loader import def_component_loader
+#    VALUES
 from data.values import cnt, msg, rel
 # CONNECTION
 from data.connection.link_update import lnk_upd
