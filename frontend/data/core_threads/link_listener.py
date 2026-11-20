@@ -43,10 +43,11 @@ def lnk_lst():
                 # extract data
                 dt = ul.get('trn_dt')
                 # extract timestamp
-                tm_stm = dt.get('tm_stm')
+                old="""tm_stm = dt.get('tm_stm')"""
+                ls_tm_stm = (dt.get('data') or {}).get('ls_tm_stm')
                 # if there is a timestamp, send update in return
-                if tm_stm:
-                    update(ul.get("snd_id"), tm_stm)
+                if ls_tm_stm:
+                    update(ul.get("snd_id"), ls_tm_stm)
                 # extract sync_data
                 sync_data = (dt.get('data') or {}).get('dt_snc')
                 # if sync_data IS a list and ISNT empty > pass all the received messages to pending
