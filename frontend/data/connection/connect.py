@@ -1,6 +1,5 @@
 import threading
 import websocket
-import json
 import time
 
 from ..values import op, set_WS, set_ERR, get_ERR, cnt, get_WS
@@ -74,42 +73,7 @@ def cnn():
     # send update call to every contact in a list
     for key, cnt_info in cnt.items():
         update(key, None)
-"""
-    try:
-        ws = websocket.create_connection(get_prefix('ws') + gnr["ws_lnk"])
 
-        set_WS(ws)
-
-        ws.send(
-            json.dumps(
-                {
-                    "snd_id": gnr["snd_id"],
-                    "req_type": "cnn",
-                }
-            )
-        )
-        # starting to listen to the relay
-        listen()
-        # cleaning error message
-        set_ERR('')
-        # wait for registration to take place
-        # <================================== ISSUE TO GET SOLVED
-        # Should wait longer because lack of knowledge when the relay may ask for list sharing, that adds to pending -
-        # time, original waiting time - 0.3 sec.
-        # Solutions:
-        # * Add a timer as on the relay.
-        # * Check when the relay makes registration.
-        # * Make a relay drop a response back by http.
-        time.sleep(2)
-        # send update call to every contact in a list
-        for key, cnt_info in cnt.items():
-            update(key, None)
-    except Exception as e:
-        if not get_ERR():
-            set_ERR(f"[Current WebSocket not accessible]")
-
-        err_pop(e)
-"""
 
 def wait_ping():
     global _KILL

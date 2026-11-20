@@ -1,6 +1,4 @@
-import json
-
-from ..values import op, set_ERR, get_WS
+from ..values import set_ERR, get_WS
 from ..core_threads.link_listener import dont_listen
 from .connect import stop_waiting
 
@@ -9,33 +7,20 @@ from ..helpers.request_sender import request_sender
 
 
 def dsc():
-    if get_WS():
-        request_sender("dsc",{})
+    _WS = get_WS()
+    _SENT = False
 
-        dont_listen()
+    if _WS:
+        _SENT = request_sender("dsc", {})
 
-        get_WS().close()
-    else:
+        if _SENT:
+            dont_listen()
+
+            _WS.close()
+
+    if not _SENT:
         stop_waiting()
 
     def_reports()
 
     set_ERR('')
-
-"""
- try:
-        get_WS().send(
-            json.dumps(
-                {
-                    "snd_id": op['gnr']["snd_id"],
-                    "req_type": "dsc",
-                }
-            )
-        )
-
-        dont_listen()
-
-        get_WS().close()
-    except Exception as e:
-        stop_waiting()
-"""

@@ -7,11 +7,10 @@ from ..helpers.get_prefix import get_prefix
 
 
 def relay_ping():
-    ws_lnk = op.get('gnr').get("ws_lnk")
-
+    gnr = op.get('gnr')
+    ws_lnk = gnr.get("ws_lnk")
+    cln_id = gnr.get('snd_id')
     http_address = get_prefix('http') + ws_lnk
-
-    cln_id = op.get('gnr').get('snd_id')
 
     dt = {"snd_id": cln_id}
 

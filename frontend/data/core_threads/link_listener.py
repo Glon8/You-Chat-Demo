@@ -36,14 +36,12 @@ def lnk_lst():
             # check is it a message call
             if ul.get('req_type') == 'msg':
                 # if a request type is a message, pass to pending
-                old = """add_pending(ul.get("snd_id"), ul.get("rcv_id"), ul.get('tm_stm'), ul.get('trn_dt'))"""
                 add_pending(ul.get("snd_id"), ul.get("rcv_id"), ul.get('trn_dt'))
             # check is it an update call
             elif ul['req_type'] == 'upd':
                 # extract data
                 dt = ul.get('trn_dt')
                 # extract timestamp
-                old="""tm_stm = dt.get('tm_stm')"""
                 ls_tm_stm = (dt.get('data') or {}).get('ls_tm_stm')
                 # if there is a timestamp, send update in return
                 if ls_tm_stm:
@@ -53,7 +51,6 @@ def lnk_lst():
                 # if sync_data IS a list and ISNT empty > pass all the received messages to pending
                 if isinstance(sync_data, list) and sync_data:
                     for msg in sync_data:
-                        old = """add_pending(msg.get("snd_id"), msg.get("rcv_id"), msg.get('tm_stm'), msg.get('msg'))"""
                         add_pending(msg.get("snd_id"), msg.get("rcv_id"), msg.get('trn_dt'))
             # check if a sender is in contacts, update its "last_seen" tag to now
             if snd in cnt:
@@ -64,6 +61,7 @@ def lnk_lst():
             # inform
             if not get_ERR():
                 set_ERR("[Current WebSocket not accessible]")
+
             err_pop("Link listener has been crashed")
             break
 

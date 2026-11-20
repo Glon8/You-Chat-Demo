@@ -1,7 +1,6 @@
-import json
 import time
 
-from ..values import op, get_WS, cnt
+from ..values import op, cnt
 
 from ..helpers.err_pop import err_pop
 from ..helpers.add_pending import add_pending
@@ -9,13 +8,14 @@ from ..helpers.request_sender import request_sender
 
 
 def snd():
-    gnr = op["gnr"]
+    gnr = op.get("gnr")
+    rcv = gnr.get("rcv_id")
 
-    if not gnr["rcv_id"]:
+    if not rcv:
         err_pop("No receiver has been selected")
         return
 
-    if gnr['rcv_id'] not in cnt:
+    if rcv not in cnt:
         err_pop("Unknown number check your contacts")
         return
 
@@ -32,36 +32,4 @@ def snd():
         # inform
         err_pop("Message has been STORED and NOT SENT")
 
-    old = """add_pending(gnr["snd_id"], gnr["rcv_id"], now_time, dt)"""
-    add_pending(gnr["snd_id"], gnr["rcv_id"], transfer_data)
-
-"""
-    try:
-        old = '''
-        get_WS().send(
-            json.dumps(
-                {
-                    "snd_id": gnr["snd_id"],
-                    "rcv_id": gnr["rcv_id"],
-                    "req_type": "msg",
-                    "trn_dt": MSG,
-                    "tm_stm": now_time
-                }
-            )
-        )
-        '''
-
-        get_WS().send(
-            json.dumps(
-                {
-                    "snd_id": gnr["snd_id"],
-                    "rcv_id": gnr["rcv_id"],
-                    "req_type": "msg",
-                    "trn_dt": transfer_data
-                }
-            )
-        )
-    except Exception as e:
-        # inform
-        err_pop("Message has been STORED and NOT SENT")
-"""
+    add_pending(gnr["snd_id"], rcv, transfer_data)

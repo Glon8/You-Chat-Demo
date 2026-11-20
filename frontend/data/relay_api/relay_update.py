@@ -9,11 +9,10 @@ from ..helpers.get_dir import get_dir
 
 
 def rel_upd():
-    ws_lnk = op.get('gnr').get("ws_lnk")
-
+    gnr = op.get('gnr')
+    ws_lnk = gnr.get("ws_lnk")
+    cnt_id = gnr.get('snd_id')
     http_address = get_prefix('http') + ws_lnk
-
-    cnt_id = op.get('gnr').get('snd_id')
 
     dt = {
         'snd_id': cnt_id,
