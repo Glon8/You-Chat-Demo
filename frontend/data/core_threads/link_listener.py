@@ -11,14 +11,13 @@ from ..helpers.file_update import file_update
 from ..helpers.get_dir import get_dir
 
 _KILL = threading.Event()
-
 _OPEN_THREAD = None
 
 
 def lnk_lst():
     # get a global value
     global _KILL
-    # while _KILL is not false
+    # while _KILL is not true
     while not _KILL.is_set():
         # if no websocket > return
         if not get_WS():
@@ -71,19 +70,19 @@ def listen():
     global _KILL
     global _OPEN_THREAD
     # if there IS a websocket and there is NO open thread OR NO 'alive' threat
-    if get_WS() and (not _OPEN_THREAD or not _OPEN_THREAD.is_alive()):
-        # set _KILL to true
+    if get_WS() and (_OPEN_THREAD is None or not _OPEN_THREAD.is_alive()):
+        # set _KILL to false
         _KILL.clear()
-        # append new thread
         _OPEN_THREAD = threading.Thread(target=lnk_lst, daemon=True)
         # init the thread
         _OPEN_THREAD.start()
 
 
 def dont_listen():
-    # get a global value
+    # get a global values
     global _KILL
-    # if NO websocket and there IS open thread that IS 'alive'
-    if not get_WS() and _OPEN_THREAD and _OPEN_THREAD.is_alive():
-        # switch _KILL to false
+    global _OPEN_THREAD
+    # if there IS open thread that IS 'alive'
+    if _OPEN_THREAD is not None and _OPEN_THREAD.is_alive():
+        # switch _KILL to true
         _KILL.set()

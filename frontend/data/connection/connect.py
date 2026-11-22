@@ -11,33 +11,31 @@ from ..helpers.get_prefix import get_prefix
 from ..helpers.err_pop import err_pop
 from ..helpers.request_sender import request_sender
 
-_KILL = False
+_KILL = threading.Event()
+_OPEN_THREAD = None
 ping = True
 
 
 def cnn():
     global ping
+    global _OPEN_THREAD
 
     gnr = op['gnr']
 
     if not gnr["ws_lnk"]:
         if not get_ERR():
             set_ERR("[Current WebSocket not accessible]")
-
     # pinging to relay
     ping = relay_ping()
-
     # check if relay is offline
-    if not ping:
-        threading.Thread(
-            target=wait_ping,
-            daemon=True
-        ).start()
+    if not ping and (_OPEN_THREAD is None or not _OPEN_THREAD.is_alive()):
+        _OPEN_THREAD = threading.Thread(target=wait_ping, daemon=True)
+        _OPEN_THREAD.start()
         return
 
     ws = get_WS()
 
-    if ws:
+    if ws is not None and ws.connected:
         ws.close()
         dont_listen()
         time.sleep(10)  # < temporary solution, for async await issue (useEffect on js)
@@ -76,6 +74,7 @@ def cnn():
 
 
 def wait_ping():
+    # import global values
     global _KILL
     global ping
 
@@ -83,17 +82,17 @@ def wait_ping():
         set_ERR("[No ping for current WebSocket]")
     # RELAY SLEEP check
     # await shortly
-    time.sleep(10)
+    _KILL.wait(timeout=15)
     # ping to check if relay already awaken
-    ping = relay_ping()
+    if not _KILL.is_set():
+        ping = relay_ping()
     # HEART BEAT check
     # pinging until positive reply
-    while not ping and not _KILL:
-        time.sleep(60)
+    while not ping and not _KILL.wait(timeout=30):
         ping = relay_ping()
 
-    if _KILL:
-        _KILL = False
+    if _KILL.is_set():
+        _KILL.clear()
         return
 
     set_ERR("")
@@ -101,7 +100,21 @@ def wait_ping():
     cnn()
 
 
-def stop_waiting():
-    global _KILL
+def ws_ping():
+    # import global value
+    global _OPEN_THREAD
+    # if there ISNT open thread or that ISNT 'alive'
+    if _OPEN_THREAD is None or not _OPEN_THREAD.is_alive():
+        _OPEN_THREAD = threading.Thread(target=wait_ping, daemon=True)
+        _OPEN_THREAD.start()
 
-    _KILL = True
+
+def stop_waiting():
+    # import global values
+    global _KILL
+    global _OPEN_THREAD
+
+    # if _KILL is false and there IS open thread that IS 'alive'
+    if not _KILL.is_set() and _OPEN_THREAD is not None and _OPEN_THREAD.is_alive():
+        # switch _KILL to true
+        _KILL.set()

@@ -1,7 +1,7 @@
 import threading
 
 from ..values import get_ERR
-from .connect import cnn, stop_waiting, wait_ping
+from .connect import cnn, stop_waiting, ws_ping
 
 from ..helpers.def_reports import def_reports
 
@@ -14,7 +14,4 @@ def rec():
     cnn()
 
     if len(get_ERR()) > 0:
-        threading.Thread(
-            target=wait_ping,
-            daemon=True
-        ).start()
+        ws_ping()
