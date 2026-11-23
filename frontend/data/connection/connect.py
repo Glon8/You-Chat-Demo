@@ -77,18 +77,20 @@ def wait_ping():
     # import global values
     global _KILL
     global ping
+    # init
+    wait_time = 30
 
     if not get_ERR():
         set_ERR("[No ping for current WebSocket]")
     # RELAY SLEEP check
     # await shortly
-    _KILL.wait(timeout=15)
+    _KILL.wait(timeout=wait_time)
     # ping to check if relay already awaken
     if not _KILL.is_set():
         ping = relay_ping()
     # HEART BEAT check
     # pinging until positive reply
-    while not ping and not _KILL.wait(timeout=30):
+    while not ping and not _KILL.wait(timeout=wait_time):
         ping = relay_ping()
 
     if _KILL.is_set():
