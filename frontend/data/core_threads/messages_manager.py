@@ -7,27 +7,6 @@ from ..helpers.get_dir import get_dir
 
 _KILL = False
 
-"""
-OLD
-{
-    "snd_id",      - sender number
-    "rcv_id",      - receiver number
-    "tm_stm",      - message creation timestamp
-    "rcv_tm_stm",  - receive timestamp     <- created locally upon receive
-    "msg"          - message content       <- ENCRYPTED
-}
-NEW
-{
-    "snd_id",      - sender number
-    "rcv_id",      - receiver number
-    "rcv_tm_stm",  - receive timestamp     <- created locally upon receive
-    "trn_dt": {    - transferred data      <- ENCRYPTED
-        "tm_stm",  - message creation timestamp
-        "data"     - message content
-    }
-}
-"""
-
 
 def msg_mng():
     # get a global value
